@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import React from 'react';
+import { useForm } from '@inertiajs/react';
 
-export default function EventForm({ onSubmit }) {
-  const [form, setForm] = useState({
+export default function EventForm() {
+  const { data, setData, post, processing, errors } = useForm({
     title: '',
     date: '',
     location: '',
@@ -10,12 +11,12 @@ export default function EventForm({ onSubmit }) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setForm(prev => ({ ...prev, [name]: value }));
+    setData(name, value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(form);
+    post(route('events.store')); // Laravel route helper
   };
 
   return (
@@ -26,10 +27,11 @@ export default function EventForm({ onSubmit }) {
           id="title"
           name="title"
           type="text"
-          value={form.title}
+          value={data.title}
           onChange={handleChange}
           required
         />
+        {errors.title && <div>{errors.title}</div>}
       </div>
 
       <div>
@@ -38,10 +40,11 @@ export default function EventForm({ onSubmit }) {
           id="date"
           name="date"
           type="datetime-local"
-          value={form.date}
+          value={data.date}
           onChange={handleChange}
           required
         />
+        {errors.date && <div>{errors.date}</div>}
       </div>
 
       <div>
@@ -50,10 +53,11 @@ export default function EventForm({ onSubmit }) {
           id="location"
           name="location"
           type="text"
-          value={form.location}
+          value={data.location}
           onChange={handleChange}
           required
         />
+        {errors.location && <div>{errors.location}</div>}
       </div>
 
       <div>
@@ -61,16 +65,15 @@ export default function EventForm({ onSubmit }) {
         <textarea
           id="description"
           name="description"
-          value={form.description}
+          value={data.description}
           onChange={handleChange}
         />
+        {errors.description && <div>{errors.description}</div>}
       </div>
 
-      <button type="submit">Add Event</button>
+      <button type="submit" disabled={processing}>
+        Add Event
+      </button>
     </form>
   );
 }
-
-
-
-
