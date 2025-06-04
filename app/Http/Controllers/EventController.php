@@ -15,7 +15,7 @@ class EventController extends Controller
     public function index()
     {
         $events = Event::all();
-        return Inertia::render('Events/Index', ['events' => $events]);
+        return Inertia::render('Events/EventList', ['events' => $events]);
     }
 
     /**
@@ -23,7 +23,7 @@ class EventController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Events/Create');
+        return Inertia::render('Events/AddEvent');
     }
 
     /**
@@ -35,12 +35,14 @@ class EventController extends Controller
             'title' => 'required',
             'date' => 'required',
             'location' => 'required',
+            'description' => 'required',
         ]);
 
         $event = new Event();
         $event->title = $request->title;
         $event->date = $request->date;
         $event->location = $request->location;
+        $event->description = $request->description;
         $event->save();
 
         return Redirect::route('events.index')->with('success', 'Event created successfully.');

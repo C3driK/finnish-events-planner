@@ -1,0 +1,29 @@
+.header {
+    height: 55px;
+    background-color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+}
+
+.navListItem {
+    display: inline-block;
+    padding: 1rem;
+}
+
+.navLink {
+    margin: 1rem;
+    text-decoration: none;
+    color: white;
+}
+
+.navLink:hover {
+    border-bottom: 1px dashed white;
+    color: rgb(2, 233, 21);
+}
+
+active {
+    color: orange;
+    border-bottom: 1px dashed white;
+}
