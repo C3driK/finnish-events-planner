@@ -1,0 +1,33 @@
+.eventcard {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  background-color: #fff;
+  max-width: 500px;
+}
+
+.eventcard h2 {
+  margin: 0 0 8px;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.eventcard p {
+  margin: 4px 0;
+  color: #333;
+}
+
+.eventcard button {
+  margin-top: 12px;
+  padding: 6px 12px;
+  border: none;
+  background-color: #dc2626;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.eventcard button:hover {
+  background-color: #b91c1c;
+}
