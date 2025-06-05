@@ -1,5 +1,8 @@
 import React from 'react';
+import '../../css/eventcard.css';
+
 import EventList from '@/Pages/Events/EventList';
+
 
 
 export default function EventCard({ title, date, description, location }) {
