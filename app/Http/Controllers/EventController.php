@@ -35,6 +35,7 @@ class EventController extends Controller
             'title' => 'required',
             'date' => 'required',
             'location' => 'required',
+            'type' => 'required',
             'description' => 'required',
         ]);
 
@@ -42,6 +43,7 @@ class EventController extends Controller
         $event->title = $request->title;
         $event->date = $request->date;
         $event->location = $request->location;
+        $event->type = $request->type;
         $event->description = $request->description;
         $event->save();
 
@@ -53,7 +55,7 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        return Inertia::render('Events/Show', ['event' => $event]);
+        return Inertia::render('Events/EventDetails', ['event' => $event]);
     }
 
     /**
@@ -73,10 +75,12 @@ class EventController extends Controller
             'title' => 'required',
             'date' => 'required',
             'location' => 'required',
+            'type' => 'required',
         ]);
         $event->title = $request->title;
         $event->date = $request->date;
         $event->location = $request->location;
+        $event->type = $request->type;
         $event->save();
 
         return Redirect::route('events.index')->with('Success', 'Event updated successfully.');
