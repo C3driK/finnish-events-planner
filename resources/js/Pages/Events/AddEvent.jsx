@@ -9,6 +9,7 @@ export default function AddEvent() {
     date: '',
     location: '',
     description: '',
+    type:'',
   });
 
   const handleChange = (e) => {
@@ -62,6 +63,24 @@ export default function AddEvent() {
             required
           />
           {errors.location && <div className="error">{errors.location}</div>}
+        </div>
+
+        <div>
+          <label htmlFor="location">Type</label>
+          <select
+            id="tyoe"
+            name="type"
+            value={data.type}
+            onChange={handleChange}
+            required
+          >
+          <option value="" disabled>Select a Type</option>
+          <option value="music">Music</option>
+          <option value="art">Art</option>
+          <option value="culture">Culture</option>
+          <option value="general">General</option>
+          </select>
+        {errors.type && <div className="error">{errors.type}</div>}
         </div>
 
         <div>

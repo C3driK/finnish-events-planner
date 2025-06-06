@@ -1,11 +1,17 @@
 import React from 'react';
+import { router } from '@inertiajs/react';
 import '../../css/eventcard.css';
 
 import EventList from '@/Pages/Events/EventList';
 
 
 
-export default function EventCard({ title, date, description, location }) {
+export default function EventCard({ title, date, description, location, type, id }) {
+
+  const handleSeeMore = () => {
+    router.visit(route('events.show', id));
+  };
+
   return (
     <>
 
@@ -17,8 +23,9 @@ export default function EventCard({ title, date, description, location }) {
       <p>{location}</p>
       {/* <div>{tags?.join(' ')}</div>
       {image_url && <img src={image_url} alt="Event" />} */}
+      <p>{type}</p>
       <p>{description}</p>
-      <button >Delete</button>
+      <button onClick={handleSeeMore} >See More</button>
     </div>
 
 
