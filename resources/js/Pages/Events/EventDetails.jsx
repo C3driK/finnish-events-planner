@@ -5,7 +5,6 @@ import { useForm, router } from '@inertiajs/react';
 export default function EventDetails({ event }) {
   const [isEditing, setIsEditing] = useState(false);
 
-  // Initialize form with event data
   const { data, setData, put, processing, errors, reset } = useForm({
     title: event.title,
     date: event.date,
@@ -13,8 +12,8 @@ export default function EventDetails({ event }) {
     type: event.type,
     description: event.description,
   });
+  
 
-  // Toggle edit mode off and reset form data
   const handleCancel = () => {
     reset({
       title: event.title,
@@ -26,7 +25,6 @@ export default function EventDetails({ event }) {
     setIsEditing(false);
   };
 
-  // Submit updated data to backend
   const handleSave = (e) => {
     e.preventDefault();
     put(route('events.update', event.id), {
@@ -34,12 +32,19 @@ export default function EventDetails({ event }) {
     });
   };
 
-  // Delete event and redirect
   const handleDelete = () => {
     if (confirm('Are you sure you want to delete this event?')) {
       router.delete(route('events.destroy', event.id));
     }
   };
+
+
+  const handleChange = (e) => {
+    setData(e.target.name, e.target.value);
+  };
+
+  // Get current datetime for min attribute
+  const getMinDate = () => new Date().toISOString().split('T')[0];
 
   return (
     <Layout>
@@ -47,77 +52,84 @@ export default function EventDetails({ event }) {
         {isEditing ? (
           <form onSubmit={handleSave} className="space-y-4">
             <div>
-              <label className="block font-semibold mb-1">Title</label>
+              <label className="block font-semibold">Title</label>
               <input
                 type="text"
+                name="title"
                 value={data.title}
-                onChange={e => setData('title', e.target.value)}
-                className="w-full border px-3 py-2 rounded"
+                onChange={handleChange}
+                className="w-full border border-gray-300 p-2 rounded"
               />
-              {errors.title && <div className="text-red-600">{errors.title}</div>}
+              {errors.title && <p className="text-red-500 text-sm">{errors.title}</p>}
             </div>
 
             <div>
-              <label className="block font-semibold mb-1">Date & Time</label>
+              <label className="block font-semibold">Date</label>
               <input
-                type="datetime-local"
+                type="date"
+                name="date"
                 value={data.date}
-                onChange={e => setData('date', e.target.value)}
-                className="w-full border px-3 py-2 rounded"
+                min={getMinDate()}
+                onChange={handleChange}
+                className="w-full border border-gray-300 p-2 rounded"
               />
-              {errors.date && <div className="text-red-600">{errors.date}</div>}
+              {errors.date && <p className="text-red-500 text-sm">{errors.date}</p>}
             </div>
 
             <div>
-              <label className="block font-semibold mb-1">Location</label>
+              <label className="block font-semibold">Location</label>
               <input
                 type="text"
+                name="location"
                 value={data.location}
-                onChange={e => setData('location', e.target.value)}
-                className="w-full border px-3 py-2 rounded"
+                onChange={handleChange}
+                className="w-full border border-gray-300 p-2 rounded"
               />
-              {errors.location && <div className="text-red-600">{errors.location}</div>}
+              {errors.location && <p className="text-red-500 text-sm">{errors.location}</p>}
             </div>
 
             <div>
-              <label className="block font-semibold mb-1">Type</label>
+              <label htmlFor="type" className="block font-semibold">Type</label>
               <select
+                id="type"
+                name="type"
                 value={data.type}
-                onChange={e => setData('type', e.target.value)}
-                className="w-full border px-3 py-2 rounded"
+                onChange={handleChange}
+                required
+                className="w-full border border-gray-300 p-2 rounded"
               >
-                <option value="">Select type</option>
+                <option value="" disabled>Select a Type</option>
                 <option value="music">Music</option>
                 <option value="art">Art</option>
                 <option value="culture">Culture</option>
                 <option value="general">General</option>
               </select>
-              {errors.type && <div className="text-red-600">{errors.type}</div>}
+              {errors.type && <p className="text-red-500 text-sm">{errors.type}</p>}
             </div>
 
             <div>
-              <label className="block font-semibold mb-1">Description</label>
+              <label className="block font-semibold">Description</label>
               <textarea
+                name="description"
                 value={data.description}
-                onChange={e => setData('description', e.target.value)}
-                className="w-full border px-3 py-2 rounded"
-                rows={4}
+                onChange={handleChange}
+                className="w-full border border-gray-300 p-2 rounded"
               />
-              {errors.description && <div className="text-red-600">{errors.description}</div>}
+              {errors.description && <p className="text-red-500 text-sm">{errors.description}</p>}
             </div>
 
-            <div className="flex space-x-4">
+            <div className="flex gap-4">
               <button
                 type="submit"
                 disabled={processing}
-                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+                className="w-28 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
               >
                 Save
               </button>
               <button
                 type="button"
                 onClick={handleCancel}
-                className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500"
+                className="w-28 bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500"
               >
                 Cancel
               </button>
@@ -127,28 +139,58 @@ export default function EventDetails({ event }) {
           <>
             <h1 className="text-3xl font-bold mb-4">{event.title}</h1>
             <p><strong>Date:</strong> {new Date(event.date).toLocaleString()}</p>
-            <p><strong>Location:</strong> {event.location}</p>
+            <p>
+              <strong>Location:</strong> {event.location}{' '}
+              <a
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.location)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 underline ml-1"
+              >
+                📍
+              </a>
+            </p>
             <p><strong>Type:</strong> {event.type}</p>
             <p><strong>Description:</strong></p>
             <p className="mb-6 whitespace-pre-line">{event.description}</p>
 
-            <div className="flex space-x-4">
+            <div className="flex flex-wrap gap-4 mb-4">
               <button
                 onClick={() => setIsEditing(true)}
-                className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+                className="w-28 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
               >
                 Edit
               </button>
 
               <button
                 onClick={handleDelete}
-                className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+                className="w-28 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
               >
                 Delete
+              </button>
+
+              <button
+                onClick={()=>window.history.back()}
+                className="w-28 bg-gray-400 text-gray-800 px-4 py-2 rounded hover:bg-gray-500"
+              >
+                Back
               </button>
             </div>
           </>
         )}
+      </div>
+
+      <div className="mt-8">
+        <iframe
+          title="Event Location Map"
+          width="100%"
+          height="300"
+          style={{ border: 0 }}
+          loading="lazy"
+          allowFullScreen
+          referrerPolicy="no-referrer-when-downgrade"
+          src={`https://maps.google.com/maps?q=${encodeURIComponent(event.location)}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
+        ></iframe>
       </div>
     </Layout>
   );
