@@ -12,11 +12,41 @@ class EventController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+
+    public function index(Request $request)
     {
-        $events = Event::all();
-        return Inertia::render('Events/EventList', ['events' => $events]);
+        $search = $request->input('search');
+        $type = $request->input('type');
+        $date = $request->input('date');
+        $query = Event::query();
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")
+                    ->orWhere('location', 'like', "%{$search}%");
+            });
+        }
+
+        if ($type) {
+            $query->where('type', $type);
+        }
+        if ($date) {
+            $query->where('date', $date);
+        }
+
+        $events = $query->orderBy('date', 'asc')->paginate(10)->withQueryString();
+
+        return Inertia::render('Events/EventList', [
+            'events' => $events,
+            'filters' => [
+                'search' => $search,
+                'type' => $type,
+                'date' => $date,
+            ],
+        ]);
     }
+
+
 
     /**
      * Show the form for creating a new resource.

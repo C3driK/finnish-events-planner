@@ -12,6 +12,8 @@ export default function AddEvent() {
     type:'',
   });
 
+   const getMinDate = () => new Date().toISOString().split('T')[0];
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData(name, value);
@@ -40,14 +42,16 @@ export default function AddEvent() {
         </div>
 
         <div>
-          <label htmlFor="date">Date & Time</label>
+          <label htmlFor="date">Date</label>
           <input
             id="date"
             name="date"
-            type="datetime-local"
+            type="date"
             value={data.date}
+            min={getMinDate()}
             onChange={handleChange}
             required
+            
           />
           {errors.date && <div className="error">{errors.date}</div>}
         </div>
@@ -66,9 +70,9 @@ export default function AddEvent() {
         </div>
 
         <div>
-          <label htmlFor="location">Type</label>
+          <label htmlFor="type">Type</label>
           <select
-            id="tyoe"
+            id="type"
             name="type"
             value={data.type}
             onChange={handleChange}
