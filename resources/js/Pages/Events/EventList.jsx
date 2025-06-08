@@ -4,6 +4,7 @@ import { usePage, router } from '@inertiajs/react';
 import EventCard from '@/Components/EventCard';
 import Layout from '@/Layouts/Layout';
 import SearchInput from '@/Components/SearchInput';
+import { Link } from '@inertiajs/react';
 
 export default function EventList() {
   const { events, filters = {}, flash } = usePage().props;
@@ -12,7 +13,6 @@ export default function EventList() {
   const [type, setType] = useState(filters.type || '');
   const [date, setDate] = useState(filters.date || '');
 
-  // Get current date (YYYY-MM-DD) for min attribute
   const getMinDate = () => new Date().toISOString().split('T')[0];
 
   useEffect(() => {
@@ -25,7 +25,6 @@ export default function EventList() {
 
     return () => clearTimeout(timer);
   }, [search, type, date]);
-
 
   const changePage = (page) => {
     router.get(route('events.index'), { search, type, date, page }, {
@@ -40,43 +39,27 @@ export default function EventList() {
 
       {flash.success && <div className="alert">{flash.success}</div>}
 
-      {/* Filters */}
-      <div className="flex flex-wrap gap-4 mb-6 max-w-3xl">
-        <SearchInput
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search by title or location"
-        />
+      {/* Filters (delegated to SearchInput) */}
+      <SearchInput
+        search={search}
+        setSearch={setSearch}
+        type={type}
+        setType={setType}
+        date={date}
+        setDate={setDate}
+        minDate={getMinDate()}
+      />
 
-        <select
-          name="type"
-          value={type}
-          onChange={(e) => setType(e.target.value)}
-          className="border p-2 rounded w-40"
-        >
-          <option value="">All Types</option>
-          <option value="music">Music</option>
-          <option value="art">Art</option>
-          <option value="culture">Culture</option>
-          <option value="general">General</option>
-        </select>
-
-        <input
-          type="date"
-          name="date"
-          value={date}
-          min={getMinDate()}
-          onChange={(e) => setDate(e.target.value)}
-          className="border p-2 rounded"
-        />
-      </div>
+      <Link href={route('events.calendar')} className="text-blue-600 hover:underline">
+        📅 Calendar View
+      </Link>
 
       {/* Event List */}
       {events.data.length === 0 ? (
         <p>No events found.</p>
       ) : (
         <div className="event-list-container">
-          {events.data.map(event => (
+          {events.data.map((event) => (
             <EventCard key={event.id} {...event} />
           ))}
         </div>

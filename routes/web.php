@@ -6,17 +6,25 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+Route::get('/', function () {
+    return Inertia::render('Home');
+})->name('home');
 
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
 Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
 Route::post('/events', [EventController::class, 'store'])->name('events.store');
+Route::get('/events/calendar', [EventController::class, 'calendar'])->name('events.calendar');
+
 Route::get('/events/{event}', [EventController::class, 'show'])->name('events.details');
+
 
 Route::resource('events', EventController::class)
     ->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy'])
     ->names('events');
 
 Route::resource('events', EventController::class);
+
+
 
 
 // Route::get('/', function () {

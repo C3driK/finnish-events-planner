@@ -8,9 +8,10 @@ export default function Layout({ children }) {
       <header className="bg-gray-800 text-white p-4 flex justify-between">
         <div className="font-bold">Finnish Events Planner</div>
         <nav className="space-x-4">
-          <Link href="/" className="hover:underline">Home</Link>
+          <Link href={route('home')} className="hover:underline">Home</Link>
           <Link href="/events" className="hover:underline">Events</Link>
           <Link href="/events/create" className="hover:underline">Add Event</Link>
+          <Link href={route('events.calendar')} className="hover:underline">Calender</Link>
         </nav>
       </header>
 
