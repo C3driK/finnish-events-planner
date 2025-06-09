@@ -24,7 +24,7 @@ export default function Welcome({ auth, events }) {
                     animation: "backgroundPulse 8s ease-in-out infinite",
                 }}
             >
-                <style>{`
+                <style jsx>{`
                     @keyframes backgroundPulse {
                         0%,
                         100% {

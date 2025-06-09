@@ -1,11 +1,16 @@
 // resources/js/Layouts/Layout.jsx
 import React from "react";
-import { Link } from "@inertiajs/react";
+import { Link, Head } from "@inertiajs/react";
+
 
 export default function Layout({ children }) {
     return (
         <div className="min-h-screen flex flex-col relative overflow-hidden">
-            <style>{`
+             <Head>
+                <title>SHOC Events</title>
+                <link rel="icon" type="image/x-icon" href="/favicon.jpg" />
+            </Head>
+            <style jsx>{`
                 @keyframes logoGlow {
                     0%,
                     100% {
