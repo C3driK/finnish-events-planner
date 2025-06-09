@@ -5,7 +5,7 @@ import { Link } from "@inertiajs/react";
 export default function Layout({ children }) {
     return (
         <div className="min-h-screen flex flex-col relative overflow-hidden">
-            <style jsx>{`
+            <style>{`
                 @keyframes logoGlow {
                     0%,
                     100% {
