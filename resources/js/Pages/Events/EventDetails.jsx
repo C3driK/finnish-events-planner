@@ -9,6 +9,7 @@ export default function EventDetails({ event }) {
     title: event.title,
     date: event.date,
     location: event.location,
+    address: event.address,
     type: event.type,
     description: event.description,
   });
@@ -19,6 +20,7 @@ export default function EventDetails({ event }) {
       title: event.title,
       date: event.date,
       location: event.location,
+      address: event.address,
       type: event.type,
       description: event.description,
     });
@@ -88,6 +90,19 @@ export default function EventDetails({ event }) {
               {errors.location && <p className="text-red-500 text-sm">{errors.location}</p>}
             </div>
 
+
+            <div>
+              <label className="block font-semibold">Address</label>
+              <input
+                type="text"
+                name="address"
+                value={data.address}
+                onChange={handleChange}
+                className="w-full border border-gray-300 p-2 rounded"
+              />
+              {errors.address && <p className="text-red-500 text-sm">{errors.address}</p>}
+            </div>
+
             <div>
               <label htmlFor="type" className="block font-semibold">Type</label>
               <select
@@ -98,10 +113,14 @@ export default function EventDetails({ event }) {
                 required
                 className="w-full border border-gray-300 p-2 rounded"
               >
-                <option value="" disabled>Select a Type</option>
+                 <option value="" disabled>Select a Type</option>
                 <option value="music">Music</option>
                 <option value="art">Art</option>
                 <option value="culture">Culture</option>
+                <option value="kids">Kids</option>
+                <option value="sport">Sport</option>
+                <option value="food">Food</option>
+                <option value="dance">Dance</option>
                 <option value="general">General</option>
               </select>
               {errors.type && <p className="text-red-500 text-sm">{errors.type}</p>}
@@ -141,14 +160,14 @@ export default function EventDetails({ event }) {
             <p><strong>Date:</strong> {new Date(event.date).toLocaleString()}</p>
             <p>
               <strong>Location:</strong> {event.location}{' '}
-              <a
+              {/* <a
                 href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.location)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-600 underline ml-1"
               >
                 📍
-              </a>
+              </a> */}
             </p>
             <p><strong>Type:</strong> {event.type}</p>
             <p><strong>Description:</strong></p>
@@ -189,7 +208,7 @@ export default function EventDetails({ event }) {
           loading="lazy"
           allowFullScreen
           referrerPolicy="no-referrer-when-downgrade"
-          src={`https://maps.google.com/maps?q=${encodeURIComponent(event.location)}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
+          src={`https://maps.google.com/maps?q=${encodeURIComponent(event.address||event.location)}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
         ></iframe>
       </div>
     </Layout>

@@ -10,6 +10,7 @@ export default function AddEvent() {
     location: '',
     description: '',
     type:'',
+    address:'',
   });
 
    const getMinDate = () => new Date().toISOString().split('T')[0];
@@ -70,6 +71,19 @@ export default function AddEvent() {
         </div>
 
         <div>
+          <label htmlFor="address">Address</label>
+          <input
+            id="address"
+            name="address"
+            type="text"
+            value={data.address}
+            onChange={handleChange}
+            required
+          />
+          {errors.location && <div className="error">{errors.location}</div>}
+        </div>
+
+        <div>
           <label htmlFor="type">Type</label>
           <select
             id="type"
@@ -82,6 +96,10 @@ export default function AddEvent() {
           <option value="music">Music</option>
           <option value="art">Art</option>
           <option value="culture">Culture</option>
+          <option value="kids">Kids</option>
+          <option value="sport">Sport</option>
+          <option value="food">Food</option>
+          <option value="dance">Dance</option>
           <option value="general">General</option>
           </select>
         {errors.type && <div className="error">{errors.type}</div>}
@@ -105,4 +123,3 @@ export default function AddEvent() {
     </Layout>
   );
 }
-
