@@ -65,6 +65,7 @@ class EventController extends Controller
             'title' => 'required',
             'date' => 'required',
             'location' => 'required',
+            'address' => 'required',
             'type' => 'required',
             'description' => 'required',
         ]);
@@ -73,6 +74,7 @@ class EventController extends Controller
         $event->title = $request->title;
         $event->date = $request->date;
         $event->location = $request->location;
+        $event->address = $request->address;
         $event->type = $request->type;
         $event->description = $request->description;
         $event->save();
@@ -105,15 +107,17 @@ class EventController extends Controller
             'title' => 'required',
             'date' => 'required',
             'location' => 'required',
+            'address' => 'required',
             'type' => 'required',
         ]);
         $event->title = $request->title;
         $event->date = $request->date;
         $event->location = $request->location;
+        $event->address = $request->address;
         $event->type = $request->type;
         $event->save();
 
-        return Redirect::route('events.index')->with('Success', 'Event updated successfully.');
+        return Redirect::route('events.index')->with('success', 'Event updated successfully.');
     }
 
     /**
@@ -122,6 +126,15 @@ class EventController extends Controller
     public function destroy(Event $event)
     {
         $event->delete();
-        return Redirect::route('events.index')->with('Success', 'Event deleted successfully.');
+        return Redirect::route('events.index')->with('success', 'Event deleted successfully.');
+    }
+
+    public function calendar()
+    {
+        $events = Event::orderBy('date')->get();
+
+        return Inertia::render('Events/CalendarView', [
+            'events' => $events,
+        ]);
     }
 }
