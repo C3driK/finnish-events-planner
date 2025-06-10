@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import Layout from '@/Layouts/Layout';
-import { useForm, router } from '@inertiajs/react';
+import { useForm, router} from '@inertiajs/react';
 
-export default function EventDetails({ event }) {
+export default function EventDetails({ event, auth }) {
   const [isEditing, setIsEditing] = useState(false);
+
+  const isOwner = auth?.user?.id === event.user_id;
 
   const { data, setData, put, processing, errors, reset } = useForm({
     title: event.title,
@@ -173,20 +175,34 @@ export default function EventDetails({ event }) {
             <p><strong>Description:</strong></p>
             <p className="mb-6 whitespace-pre-line">{event.description}</p>
 
+            {isOwner && (
+
             <div className="flex flex-wrap gap-4 mb-4">
               <button
                 onClick={() => setIsEditing(true)}
-                className="w-28 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
+                disabled={!auth?.user}
+                className={`w-28 px-4 py-2 rounded ${
+                  auth?.user
+                    ? 'bg-green-600 text-white hover:bg-green-700'
+                    : 'bg-green-200 text-white cursor-not-allowed'
+                }`}
               >
                 Edit
               </button>
 
               <button
                 onClick={handleDelete}
-                className="w-28 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+                disabled={!auth?.user}
+                className={`w-28 px-4 py-2 rounded ${
+                  auth?.user
+                    ? 'bg-red-600 text-white hover:bg-red-700'
+                    : 'bg-red-200 text-white cursor-not-allowed'
+                }`}
               >
                 Delete
               </button>
+              </div>
+            )}
 
               <button
                 onClick={()=>window.history.back()}
@@ -194,7 +210,7 @@ export default function EventDetails({ event }) {
               >
                 Back
               </button>
-            </div>
+            
           </>
         )}
       </div>
