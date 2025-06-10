@@ -4,6 +4,7 @@ import { useForm } from '@inertiajs/react';
 import Layout from '@/Layouts/Layout'; // Layout for header/nav/footer
 
 export default function AddEvent() {
+  console.log('Add event component loaded');
   const { data, setData, post, processing, errors } = useForm({
     title: '',
     date: '',

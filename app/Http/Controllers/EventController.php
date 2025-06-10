@@ -6,6 +6,7 @@ use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Inertia\Inertia;
 
 class EventController extends Controller
@@ -13,6 +14,7 @@ class EventController extends Controller
     /**
      * Display a listing of the resource.
      */
+    use AuthorizesRequests;
 
     public function index(Request $request)
     {
@@ -57,7 +59,10 @@ class EventController extends Controller
      */
     public function create()
     {
-        return Inertia::render('Events/AddEvent');
+        return response('Event create route reached', 200);
+        // dd('Event create route reached');
+        // return response()->json(['message' => 'Route is working']);
+        // return Inertia::render('Events/AddEvent');
     }
 
     /**
@@ -74,13 +79,25 @@ class EventController extends Controller
             'description' => 'required',
         ]);
 
-        $event = new Event();
-        $event->title = $request->title;
-        $event->date = $request->date;
-        $event->location = $request->location;
-        $event->address = $request->address;
-        $event->type = $request->type;
-        $event->description = $request->description;
+        // $event = new Event();
+        // $event->title = $request->title;
+        // $event->date = $request->date;
+        // $event->location = $request->location;
+        // $event->address = $request->address;
+        // $event->type = $request->type;
+        // $event->description = $request->description;
+        // $event->save();
+
+        $event = new Event([
+            'title' => $request->title,
+            'date' => $request->date,
+            'location' => $request->location,
+            'address' => $request->address,
+            'type' => $request->type,
+            'description' => $request->description,
+        ]);
+
+        $event->user_id = Auth::id(); // Assign the authenticated user
         $event->save();
 
         return Redirect::route('events.index')->with('success', 'Event created successfully.');
@@ -104,6 +121,9 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
+        // return Inertia::render('Events/Edit', ['event' => $event]);
+
+        $this->authorize('update', $event);
         return Inertia::render('Events/Edit', ['event' => $event]);
     }
 
@@ -112,6 +132,8 @@ class EventController extends Controller
      */
     public function update(Request $request, Event $event)
     {
+        $this->authorize('update', $event);
+
         $request->validate([
             'title' => 'required',
             'date' => 'required',
@@ -119,12 +141,21 @@ class EventController extends Controller
             'address' => 'required',
             'type' => 'required',
         ]);
-        $event->title = $request->title;
-        $event->date = $request->date;
-        $event->location = $request->location;
-        $event->address = $request->address;
-        $event->type = $request->type;
-        $event->save();
+        // $event->title = $request->title;
+        // $event->date = $request->date;
+        // $event->location = $request->location;
+        // $event->address = $request->address;
+        // $event->type = $request->type;
+        // $event->save();
+
+        $event->update($request->only([
+            'title',
+            'date',
+            'location',
+            'address',
+            'type',
+            'description'
+        ]));
 
         return Redirect::route('events.index')->with('success', 'Event updated successfully.');
     }
@@ -134,6 +165,8 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
+        $this->authorize('delete', $event);
+
         $event->delete();
         return Redirect::route('events.index')->with('success', 'Event deleted successfully.');
     }

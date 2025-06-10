@@ -80,7 +80,7 @@ export default function Layout({ children }) {
                             Events
                         </Link>
                         <Link
-                            href="/events/create"
+                            href={route('events.create')}
                             className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold px-6 py-2 rounded-lg hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-yellow-500/25"
                         >
                             Add Event
