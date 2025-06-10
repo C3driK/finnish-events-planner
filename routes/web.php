@@ -1,10 +1,13 @@
 <?php
 
-// use App\Http\Controllers\ProfileController;
-// use App\Http\Controllers\EventController;
-// use Illuminate\Foundation\Application;
-// use Illuminate\Support\Facades\Route;
-// use Inertia\Inertia;
+
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\EventController;
+use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
+use App\Models\Event;
+
 
 
 // Route::get('/events', [EventController::class, 'index'])->name('events.index');
@@ -19,12 +22,14 @@
 
 // Route::resource('events', EventController::class);
 
+Route::get('/', function () {
+    $events = Event::orderBy('date', 'asc')->take(10)->get();
+    return Inertia::render('Welcome', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has('register'),
+        'events' =>  $events,
+    ]);
 
-// Route::get('/', function () {
-//     return Inertia::render('Welcome', [
-//         'canLogin' => Route::has('login'),
-//         'canRegister' => Route::has('register')
-//     ]);
 
 //     return Inertia::render('App');
 // });

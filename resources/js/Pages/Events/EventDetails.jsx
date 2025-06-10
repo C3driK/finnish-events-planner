@@ -5,6 +5,8 @@ import { useForm, router} from '@inertiajs/react';
 export default function EventDetails({ event, auth }) {
   const [isEditing, setIsEditing] = useState(false);
 
+  const isOwner = auth?.user?.id === event.user_id;
+
   const { data, setData, put, processing, errors, reset } = useForm({
     title: event.title,
     date: event.date,
@@ -173,6 +175,8 @@ export default function EventDetails({ event, auth }) {
             <p><strong>Description:</strong></p>
             <p className="mb-6 whitespace-pre-line">{event.description}</p>
 
+            {isOwner && (
+
             <div className="flex flex-wrap gap-4 mb-4">
               <button
                 onClick={() => setIsEditing(true)}
@@ -197,6 +201,8 @@ export default function EventDetails({ event, auth }) {
               >
                 Delete
               </button>
+              </div>
+            )}
 
               <button
                 onClick={()=>window.history.back()}
@@ -204,7 +210,7 @@ export default function EventDetails({ event, auth }) {
               >
                 Back
               </button>
-            </div>
+            
           </>
         )}
       </div>
