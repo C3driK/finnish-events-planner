@@ -6,7 +6,6 @@ use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Inertia\Inertia;
 
 class EventController extends Controller
@@ -14,7 +13,6 @@ class EventController extends Controller
     /**
      * Display a listing of the resource.
      */
-    use AuthorizesRequests;
 
     public function index(Request $request)
     {
@@ -60,10 +58,7 @@ class EventController extends Controller
      */
     public function create()
     {
-        return response('Event create route reached', 200);
-        // dd('Event create route reached');
-        // return response()->json(['message' => 'Route is working']);
-        // return Inertia::render('Events/AddEvent');
+        return Inertia::render('Events/AddEvent');
     }
 
     /**
@@ -108,9 +103,6 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        // return Inertia::render('Events/Edit', ['event' => $event]);
-
-        $this->authorize('update', $event);
         return Inertia::render('Events/Edit', ['event' => $event]);
     }
 
@@ -119,8 +111,6 @@ class EventController extends Controller
      */
     public function update(Request $request, Event $event)
     {
-        $this->authorize('update', $event);
-
         $request->validate([
             'title' => 'required',
             'date' => 'required',
@@ -128,21 +118,12 @@ class EventController extends Controller
             'address' => 'required',
             'type' => 'required',
         ]);
-        // $event->title = $request->title;
-        // $event->date = $request->date;
-        // $event->location = $request->location;
-        // $event->address = $request->address;
-        // $event->type = $request->type;
-        // $event->save();
-
-        $event->update($request->only([
-            'title',
-            'date',
-            'location',
-            'address',
-            'type',
-            'description'
-        ]));
+        $event->title = $request->title;
+        $event->date = $request->date;
+        $event->location = $request->location;
+        $event->address = $request->address;
+        $event->type = $request->type;
+        $event->save();
 
         return Redirect::route('events.index')->with('success', 'Event updated successfully.');
     }
@@ -152,8 +133,6 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
-        $this->authorize('delete', $event);
-
         $event->delete();
         return Redirect::route('events.index')->with('success', 'Event deleted successfully.');
     }
