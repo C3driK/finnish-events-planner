@@ -13,7 +13,11 @@ export default function Welcome({ auth, events }) {
 
     return (
         <>
-            <Head title="Welcome" />
+            {/* <Head title="Welcome" /> */}
+             <Head>
+                    <title>SHOC Events</title>
+                    <link rel="icon" type="image/x-icon" href="/favicon.png" />
+            </Head>
             <div
                 className="min-h-screen text-white relative overflow-hidden"
                 style={{

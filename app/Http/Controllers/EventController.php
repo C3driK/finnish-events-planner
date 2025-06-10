@@ -23,7 +23,8 @@ class EventController extends Controller
         $date = $request->input('date');
         $query = Event::query();
 
-        // Only show UPCOMING events
+
+        // Only show UPCOMING eventsMore actions
         $query->where('date', '>=', now());
 
         if ($search) {
@@ -70,34 +71,17 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'date' => 'required',
-            'location' => 'required',
-            'address' => 'required',
-            'type' => 'required',
-            'description' => 'required',
+        $validated = $request->validate([
+            'title' => 'required|string|max:255',
+            'date' => 'required|date',
+            'location' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'type' => 'required|string|max:100',
+            'description' => 'nullable|string',
         ]);
 
-        // $event = new Event();
-        // $event->title = $request->title;
-        // $event->date = $request->date;
-        // $event->location = $request->location;
-        // $event->address = $request->address;
-        // $event->type = $request->type;
-        // $event->description = $request->description;
-        // $event->save();
-
-        $event = new Event([
-            'title' => $request->title,
-            'date' => $request->date,
-            'location' => $request->location,
-            'address' => $request->address,
-            'type' => $request->type,
-            'description' => $request->description,
-        ]);
-
-        $event->user_id = Auth::id(); // Assign the authenticated user
+        $event = new Event($validated);
+        $event->user_id = Auth::id();
         $event->save();
 
         return Redirect::route('events.index')->with('success', 'Event created successfully.');
@@ -108,6 +92,9 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
+
+        // return Inertia::render('Events/EventDetails', ['event' => $event]);
+
         return Inertia::render('Events/EventDetails', [
             'event' => $event,
             'auth' => [
