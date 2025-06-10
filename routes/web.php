@@ -4,8 +4,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EventController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ContactController;
 use Inertia\Inertia;
 use App\Models\Event;
+
 
 
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
@@ -28,29 +30,29 @@ Route::get('/', function () {
         'canRegister' => Route::has('register'),
         'events' =>  $events,
     ]);
-
-    return Inertia::render('App');
 });
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-//Add Event controller
-Route::middleware(['auth'])->group(function () {
-    Route::resource('events', EventController::class)
-        ->names('events');
-});
-
 Route::resource('events', EventController::class)->only(['index', 'show'])->names('events');
 
+//Contact form
+Route::get('/contact', [ContactController::class, 'showForm'])->name('contact.form');
+Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
+
+
+
 Route::middleware(['auth'])->group(function () {
+
+    //Add Event controller
+    Route::resource('events', EventController::class)
+        ->names('events');
     Route::resource('events', EventController::class)->except(['index', 'show'])->names('events');
-});
 
 
-
-Route::middleware('auth')->group(function () {
+    //Profile Management
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

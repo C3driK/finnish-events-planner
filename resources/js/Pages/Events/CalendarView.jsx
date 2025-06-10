@@ -21,17 +21,14 @@ export default function CalendarView() {
       if (!grouped[getDate]) {
         grouped[getDate] = [];
       }
-      console.log('Grouped events:', grouped); 
       grouped[getDate].push(event);
     });
     setCalenderView(grouped);
-    console.log('Calenderview', calenderView);
     
   }, [events]);
 
   const displayEvents = (date) => {
     const dayEvents = calenderView[date] || [];
-    console.log(`Events for ${date}:`, dayEvents);
     return dayEvents.map(event => (
       <div key={event.id} className="p-2 bg-white border rounded shadow-sm mb-1">
         <strong>{event.title}</strong><br />

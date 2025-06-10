@@ -41,6 +41,7 @@ class EventController extends Controller
 
         $events = $query->orderBy('date', 'asc')->paginate(10)->withQueryString();
 
+
         return Inertia::render('Events/EventList', [
             'events' => $events,
             'filters' => [
