@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { router } from '@inertiajs/react';
 import Weather from '@/Components/Weather';
 
-export default function EventCard({ title, date, description, location, type, id }) {
+export default function EventCard({ title, date, description, location, type, id, canManage }) {
   const [isFavorite, setIsFavorite] = useState(false);
 
   const handleSeeMore = () => {
@@ -56,6 +56,8 @@ export default function EventCard({ title, date, description, location, type, id
       >
         See More
       </button>
+    
+
     </div>
   );
 }

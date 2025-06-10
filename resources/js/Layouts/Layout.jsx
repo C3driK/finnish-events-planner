@@ -4,10 +4,12 @@ import { Link, Head } from "@inertiajs/react";
 export default function Layout({ children }) {
     return (
         <div className="min-h-screen flex flex-col relative overflow-hidden">
+
             <Head>
                 <title>SHOC Events</title>
                 <link rel="icon" type="image/x-icon" href="/favicon.png" />
             </Head>
+
 
             <style>{`
                 @keyframes logoGlow {

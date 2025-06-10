@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,6 +21,7 @@ class EventController extends Controller
         $type = $request->input('type');
         $date = $request->input('date');
         $query = Event::query();
+
 
         // Only show UPCOMING eventsMore actions
         $query->where('date', '>=', now());
@@ -86,7 +88,9 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
+
         // return Inertia::render('Events/EventDetails', ['event' => $event]);
+
         return Inertia::render('Events/EventDetails', [
             'event' => $event,
             'auth' => [
