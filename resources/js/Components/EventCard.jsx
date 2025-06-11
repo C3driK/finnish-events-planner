@@ -2,12 +2,25 @@ import React, { useState } from 'react';
 import { router } from '@inertiajs/react';
 import Weather from '@/Components/Weather';
 
+const eventTypeImages = {
+  music: '/images/Music event .avif',
+  art: '/images/Art event.jpeg',
+  general: '/images/general event.jpg',
+  dance: '/images/Dance event.jpg',
+  kids: '/images/kids event.webp',
+  sport: '/images/sport event.png',
+  culture: '/images/cultural-event.jpg',
+  food: '/images/food event.jpg',
+};
+
 export default function EventCard({ title, date, description, location, type, id, canManage }) {
   const [isFavorite, setIsFavorite] = useState(false);
 
   const handleSeeMore = () => {
     router.visit(route('events.show', id));
   };
+
+  const imageUrl = eventTypeImages[type?.toLowerCase()] || eventTypeImages.default;
 
   return (
     <div className="relative max-w-md bg-white dark:bg-gray-800 rounded-2xl border border-gray-300 dark:border-gray-700 shadow-lg shadow-gray-400/20 dark:shadow-black/40 backdrop-blur-sm p-6 m-4 hover:shadow-xl transition duration-200 text-gray-900 dark:text-gray-100">
@@ -21,7 +34,7 @@ export default function EventCard({ title, date, description, location, type, id
       </div>
 
       <img
-        src="https://images.unsplash.com/photo-1591243315780-978fd00ff9db?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y29ja3RhaWwlMjBwYXJ0eXxlbnwwfHwwfHx8MA%3D%3D"
+        src={imageUrl}
         alt={title}
         className="w-full h-48 object-cover rounded-lg mb-4"
       />
@@ -60,5 +73,6 @@ export default function EventCard({ title, date, description, location, type, id
     </div>
   );
 }
+
 
 
