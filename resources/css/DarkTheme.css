@@ -1,0 +1,21 @@
+/* Default (Light Theme) */
+body {
+    background-color: #5e5656;
+    color: #000000;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.header,
+.footer {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.dark-mode body {
+    background-color: #1a1a1a;
+    color: #ffffff;
+}
+
+.dark-mode .header,
+.dark-mode .footer {
+    background-color: rgba(136, 137, 147, 0.05);
+}
