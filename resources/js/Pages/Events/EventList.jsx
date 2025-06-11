@@ -17,7 +17,7 @@ export default function EventList() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      router.get(route('events.index'), { search, type, date, page: events.current_page }, {
+      router.get(route('events.index'), { search, type, date, page: 1 }, {
         preserveState: true,
         replace: true,
       });
