@@ -59,11 +59,12 @@ export default function EventList() {
       {events.data.length === 0 ? (
         <p className="text-gray-500 dark:text-gray-300 italic">No events found.</p>
       ) : (
-        <div className="event-list-container bg-white dark:bg-gray-800 p-4 rounded shadow-md">
-          {events.data.map((event) => (
-            <EventCard key={event.id} {...event} />
-          ))}
-        </div>
+        <div className="flex flex-wrap justify-center gap-6 bg-white dark:bg-gray-800 p-4 rounded shadow-md">
+        {events.data.map((event) => (
+          <EventCard key={event.id} {...event} />
+        ))}
+      </div>
+      
       )}
 
       {/* Pagination */}
