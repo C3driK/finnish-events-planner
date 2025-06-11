@@ -22,6 +22,11 @@ Route::resource('events', EventController::class)
 
 // Route::resource('events', EventController::class);
 
+//Add MyEvents
+Route::get('/my-events', [EventController::class, 'myEvents'])
+    ->middleware(['auth', 'verified'])
+    ->name('events.my');
+
 
 Route::get('/', function () {
     $events = Event::orderBy('date', 'asc')->take(10)->get();
