@@ -5,7 +5,6 @@ import EventCard from '@/Components/EventCard';
 import Layout from '@/Layouts/Layout';
 import SearchInput from '@/Components/SearchInput';
 
-
 export default function EventList() {
   const { events, filters = {}, flash } = usePage().props;
 
@@ -35,66 +34,68 @@ export default function EventList() {
 
   return (
     <Layout>
-      <h1 className="text-2xl font-bold mb-4">Event List</h1>
+      <div className="bg-white text-black dark:bg-gray-900 dark:text-white min-h-screen p-4">
+        <h1 className="text-2xl font-bold mb-4">Event List</h1>
 
-      {flash.success && <div className="alert">{flash.success}</div>}
+        {flash.success && <div className="alert">{flash.success}</div>}
 
-      {/* Filters (delegated to SearchInput) */}
-      <SearchInput
-        search={search}
-        setSearch={setSearch}
-        type={type}
-        setType={setType}
-        date={date}
-        setDate={setDate}
-        minDate={getMinDate()}
-      />
+        {/* Filters (delegated to SearchInput) */}
+        <SearchInput
+          search={search}
+          setSearch={setSearch}
+          type={type}
+          setType={setType}
+          date={date}
+          setDate={setDate}
+          minDate={getMinDate()}
+        />
 
-      {/* Event List */}
-      {events.data.length === 0 ? (
-        <p>No events found.</p>
-      ) : (
-        <div className="event-list-container">
-          {events.data.map((event) => (
-            <EventCard key={event.id} {...event} />
-          ))}
+        {/* Event List */}
+        {events.data.length === 0 ? (
+          <p>No events found.</p>
+        ) : (
+          <div className="event-list-container">
+            {events.data.map((event) => (
+              <EventCard key={event.id} {...event} />
+            ))}
+          </div>
+        )}
+
+        {/* Pagination */}
+        <div className="pagination flex gap-2 mt-6">
+          <button
+            disabled={events.current_page === 1}
+            onClick={() => changePage(events.current_page - 1)}
+            className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+          >
+            Previous
+          </button>
+
+          {Array.from({ length: events.last_page }, (_, i) => {
+            const pageNum = i + 1;
+            return (
+              <button
+                key={pageNum}
+                onClick={() => changePage(pageNum)}
+                className={`px-3 py-1 rounded ${
+                  events.current_page === pageNum
+                    ? 'bg-blue-600 text-white'
+                    : 'bg-gray-200'
+                }`}
+              >
+                {pageNum}
+              </button>
+            );
+          })}
+
+          <button
+            disabled={events.current_page === events.last_page}
+            onClick={() => changePage(events.current_page + 1)}
+            className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+          >
+            Next
+          </button>
         </div>
-      )}
-
-      {/* Pagination */}
-      <div className="pagination flex gap-2 mt-6">
-        <button
-          disabled={events.current_page === 1}
-          onClick={() => changePage(events.current_page - 1)}
-          className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
-        >
-          Previous
-        </button>
-
-        {Array.from({ length: events.last_page }, (_, i) => {
-          const pageNum = i + 1;
-          return (
-            <button
-              key={pageNum}
-              onClick={() => changePage(pageNum)}
-              className={`px-3 py-1 rounded ${
-                events.current_page === pageNum
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-200'
-              }`}
-            >
-              {pageNum}
-            </button>
-          );
-        })}
-
-        <button
-          disabled={events.current_page === events.last_page}
-          onClick={() => changePage(events.current_page + 1)}
-          className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
-        >
-          Next
-        </button>
       </div>
     </Layout>
   );
