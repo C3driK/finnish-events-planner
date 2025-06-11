@@ -16,7 +16,7 @@ export default function EventList() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      router.get(route('events.index'), { search, type, date, page: events.current_page }, {
+      router.get(route('events.index'), { search, type, date, page: 1 }, {
         preserveState: true,
         replace: true,
       });
@@ -33,77 +33,67 @@ export default function EventList() {
   };
 
   return (
-    <Layout>
-      <h1 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
-        Event List
-      </h1>
+<Layout>
+  <h1 className="event-list-title">Event List</h1>
 
-      {flash.success && (
-        <div className="alert bg-green-100 text-green-800 border border-green-500 rounded px-4 py-2 mb-4 dark:bg-green-900 dark:text-green-200 dark:border-green-400">
-          {flash.success}
-        </div>
-      )}
+  {flash.success && (
+    <div className="alert-success">
+      {flash.success}
+    </div>
+  )}
 
-      {/* Filters */}
-      <SearchInput
-        search={search}
-        setSearch={setSearch}
-        type={type}
-        setType={setType}
-        date={date}
-        setDate={setDate}
-        minDate={getMinDate()}
-      />
+  <SearchInput
+    search={search}
+    setSearch={setSearch}
+    type={type}
+    setType={setType}
+    date={date}
+    setDate={setDate}
+    minDate={getMinDate()}
+  />
 
-      {/* Event List */}
-      {events.data.length === 0 ? (
-        <p className="text-gray-500 dark:text-gray-300 italic">No events found.</p>
-      ) : (
-        <div className="flex flex-wrap justify-center gap-6 bg-white dark:bg-gray-800 p-4 rounded shadow-md">
-        {events.data.map((event) => (
-          <EventCard key={event.id} {...event} />
-        ))}
-      </div>
-      
-      )}
+  {events.data.length === 0 ? (
+    <p className="no-events">No events found.</p>
+  ) : (
+    <div className="event-cards-container">
+      {events.data.map((event) => (
+        <EventCard key={event.id} {...event} />
+      ))}
+    </div>
+  )}
 
-      {/* Pagination */}
-      <div className="pagination flex gap-2 mt-6">
+  <div className="pagination">
+    <button
+      disabled={events.current_page === 1}
+      onClick={() => changePage(events.current_page - 1)}
+      className="page-btn"
+    >
+      Previous
+    </button>
+
+    {Array.from({ length: events.last_page }, (_, i) => {
+      const pageNum = i + 1;
+      const isActive = events.current_page === pageNum;
+      return (
         <button
-          disabled={events.current_page === 1}
-          onClick={() => changePage(events.current_page - 1)}
-          className="px-3 py-1 bg-gray-200 dark:bg-gray-700 text-black dark:text-white rounded disabled:opacity-50"
+          key={pageNum}
+          onClick={() => changePage(pageNum)}
+          className={`page-btn${isActive ? ' active' : ''}`}
         >
-          Previous
+          {pageNum}
         </button>
+      );
+    })}
 
-        {Array.from({ length: events.last_page }, (_, i) => {
-          const pageNum = i + 1;
-          const isActive = events.current_page === pageNum;
+    <button
+      disabled={events.current_page === events.last_page}
+      onClick={() => changePage(events.current_page + 1)}
+      className="page-btn"
+    >
+      Next
+    </button>
+  </div>
+</Layout>
 
-          return (
-            <button
-              key={pageNum}
-              onClick={() => changePage(pageNum)}
-              className={`px-3 py-1 rounded ${
-                isActive
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-200 text-black dark:bg-gray-700 dark:text-white'
-              }`}
-            >
-              {pageNum}
-            </button>
-          );
-        })}
-
-        <button
-          disabled={events.current_page === events.last_page}
-          onClick={() => changePage(events.current_page + 1)}
-          className="px-3 py-1 bg-gray-200 dark:bg-gray-700 text-black dark:text-white rounded disabled:opacity-50"
-        >
-          Next
-        </button>
-      </div>
-    </Layout>
   );
 }

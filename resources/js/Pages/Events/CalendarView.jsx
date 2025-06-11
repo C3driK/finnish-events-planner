@@ -21,17 +21,14 @@ export default function CalendarView() {
       if (!grouped[getDate]) {
         grouped[getDate] = [];
       }
-      console.log('Grouped events:', grouped); 
       grouped[getDate].push(event);
     });
     setCalenderView(grouped);
-    console.log('Calenderview', calenderView);
     
   }, [events]);
 
   const displayEvents = (date) => {
     const dayEvents = calenderView[date] || [];
-    console.log(`Events for ${date}:`, dayEvents);
     return dayEvents.map(event => (
       <div key={event.id} className="p-2 bg-white border rounded shadow-sm mb-1">
         <strong>{event.title}</strong><br />
@@ -62,11 +59,11 @@ export default function CalendarView() {
 
   return (
     <Layout>
-      <h1 className="text-2xl font-bold mb-4">Event Calendar - {new Date().toLocaleString('default', { month: 'long', year: 'numeric' })}</h1>
+      <h1 className="text-2xl font-bold mb-4 text-white/90">Event Calendar - {new Date().toLocaleString('default', { month: 'long', year: 'numeric' })}</h1>
 
       <div className="grid grid-cols-7 gap-4">
         {calendar.map(day => (
-          <div key={day.date} className="border p-2 rounded bg-gray-50 min-h-[120px]">
+          <div key={day.date} className="border p-2 rounded text-black bg-gray-50 min-h-[120px]">
             <div className="font-bold text-sm mb-2">{day.day}</div>
             {displayEvents(day.date)}
           </div>

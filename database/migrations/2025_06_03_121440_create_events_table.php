@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('type');
             $table->text('description')->nullable();
             $table->string('imageURL')->nullable();
+            $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
     }

@@ -1,80 +1,122 @@
-/* Container for the list */
-.event-list-container {
-    max-width: 900px;
-    margin: 2rem auto;
-    padding: 2rem;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f9fafb; /* Light background */
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+/* Container and layout */
+.event-list-title {
+    font-size: 2.5rem; /* text-4xl */
+    font-weight: 800; /* font-extrabold */
+    margin-bottom: 1.5rem; /* mb-6 */
+    text-align: center;
+    color: white; /* text-gray-900 */
+    letter-spacing: -0.025em; /* tracking-tight */
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1); /* drop-shadow-sm */
 }
 
-/* Dark mode container */
-:root.dark .event-list-container {
-    background-color: #1e293b; /* Slate-800 */
-    box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+.dark .event-list-title {
+    color: white; /* text-gray-100 */
+    text-shadow: none;
 }
 
-/* Title */
-.event-list-container h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-    color: #111827; /* Gray-900 */
+/* Success alert */
+.alert-success {
+    background-color: #dcfce7; /* bg-green-100 */
+    color: #166534; /* text-green-900 */
+    border: 1px solid #22c55e; /* border-green-600 */
+    border-radius: 0.5rem; /* rounded-lg */
+    padding: 0.75rem 1.5rem; /* px-6 py-3 */
+    margin-bottom: 1.5rem; /* mb-6 */
+    box-shadow: inset 0 0 8px rgba(16, 185, 129, 0.2); /* shadow-inner */
+    font-weight: 600;
     text-align: center;
 }
 
-:root.dark .event-list-container h1 {
-    color: #f3f4f6; /* Gray-100 */
-}
-
-/* Flash message */
-.alert {
-    padding: 1rem 1.25rem;
-    background-color: #dcfce7; /* Green-100 */
-    color: #166534; /* Green-800 */
-    border: 1px solid #22c55e; /* Green-500 */
-    border-radius: 8px;
-    font-weight: 500;
-    margin-bottom: 1.5rem;
-    text-align: center;
-}
-
-:root.dark .alert {
-    background-color: #064e3b; /* Darker green */
-    color: #d1fae5; /* Green-100 */
-    border-color: #10b981; /* Green-500 */
+.dark .alert-success {
+    background-color: #064e3b; /* dark green */
+    color: #d1fae5; /* light green */
+    border-color: #10b981; /* green-400 */
 }
 
 /* No events message */
-.event-list-container p {
+.no-events {
     font-style: italic;
-    color: #6b7280; /* Gray-500 */
+    color: #6b7280; /* text-gray-500 */
     text-align: center;
-    font-size: 1.125rem;
+    font-size: 1.125rem; /* text-lg */
+    margin-top: 2.5rem; /* mt-10 */
 }
 
-:root.dark .event-list-container p {
-    color: #9ca3af; /* Gray-400 */
+.dark .no-events {
+    color: #9ca3af; /* text-gray-300 */
 }
 
-/* Card styling and hover effect */
-.event-list-container .event-card {
-    margin-bottom: 1.5rem;
-    transition: transform 0.2s ease-in-out;
-    background-color: white;
-    border-radius: 8px;
-    padding: 1rem;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+/* Event cards container */
+.event-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2rem; /* gap-8 */
+    background: linear-gradient(
+        135deg,
+        #4a596b,
+        #e8f0fa
+    ); /* from-blue-50 to-blue-100 */
+    padding: 1.5rem; /* p-6 */
+    border-radius: 5px; /* rounded-2xl */
+    box-shadow: 0 10px 15px rgba(59, 130, 246, 0.2); /* shadow-lg */
 }
 
-.event-list-container .event-card:hover {
-    transform: translateY(-4px);
+.dark .event-cards-container {
+    background: linear-gradient(
+        135deg,
+        #101e34,
+        #3e4b5d
+    ); /* from-gray-900 to-gray-800 */
+    box-shadow: 0 10px 20px rgba(147, 197, 253, 0.3);
 }
 
-/* Dark mode for event cards */
-:root.dark .event-list-container .event-card {
-    background-color: #334155; /* Slate-700 */
-    color: #f1f5f9; /* Light text */
-    box-shadow: 0 2px 6px rgba(255, 255, 255, 0.03);
+/* Pagination container */
+.pagination {
+    display: flex;
+    gap: 0.75rem; /* gap-3 */
+    margin-top: 2rem; /* mt-8 */
+    justify-content: center;
+}
+
+/* Pagination buttons */
+.page-btn {
+    padding: 0.5rem 1rem; /* px-4 py-2 */
+    border-radius: 0.5rem; /* rounded-lg */
+    font-weight: 600;
+    cursor: pointer;
+    color: #1f2937; /* text-gray-800 */
+    background-color: #e5e7eb; /* bg-gray-200 */
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    border: none;
+    box-shadow: none;
+}
+
+.page-btn:hover:not(:disabled) {
+    background-color: #3b82f6; /* bg-blue-500 */
+    color: white;
+    box-shadow: 0 0 8px rgba(59, 130, 246, 0.7);
+}
+
+.page-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.dark .page-btn {
+    background-color: #374151; /* bg-gray-700 */
+    color: #e5e7eb; /* text-gray-200 */
+}
+
+.dark .page-btn:hover:not(:disabled) {
+    background-color: #2563eb; /* bg-blue-600 */
+    color: white;
+    box-shadow: 0 0 10px rgba(37, 99, 235, 0.8);
+}
+
+/* Active pagination button */
+.page-btn.active {
+    background-color: #2563eb; /* bg-blue-600 */
+    color: white;
+    box-shadow: 0 0 10px rgba(37, 99, 235, 0.9);
 }

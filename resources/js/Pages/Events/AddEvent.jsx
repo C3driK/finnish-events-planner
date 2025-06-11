@@ -4,6 +4,7 @@ import { useForm } from '@inertiajs/react';
 import Layout from '@/Layouts/Layout'; // Layout for header/nav/footer
 
 export default function AddEvent() {
+
   const { data, setData, post, processing, errors } = useForm({
     title: '',
     date: '',
@@ -27,7 +28,8 @@ export default function AddEvent() {
 
   return (
     <Layout>
-      <h1 className="text-2xl font-semibold mb-4">Add New Event</h1>
+   <h1 className="text-2xl font-semibold mb-4 text-white/90">Add New Event</h1>
+
       <form onSubmit={handleSubmit} className="event-form">
         <div>
           <label htmlFor="title">Title</label>

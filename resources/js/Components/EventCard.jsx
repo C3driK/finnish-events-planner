@@ -10,12 +10,12 @@ export default function EventCard({ title, date, description, location, type, id
   };
 
   return (
-    <div className="relative max-w-md bg-white rounded-2xl shadow-md p-6 m-4 hover:shadow-lg transition duration-200">
+    <div className="relative max-w-md bg-white dark:bg-gray-800 rounded-2xl border border-gray-300 dark:border-gray-700 shadow-lg shadow-gray-400/20 dark:shadow-black/40 backdrop-blur-sm p-6 m-4 hover:shadow-xl transition duration-200 text-gray-900 dark:text-gray-100">
       
       {/* Heart icon */}
       <div
         onClick={() => setIsFavorite(!isFavorite)}
-        className="absolute top-4 left-4 cursor-pointer text-4xl"
+        className="absolute top-4 left-4 cursor-pointer text-4xl select-none"
       >
         {isFavorite ? '❤️' : '🩶'}
       </div>
@@ -26,25 +26,26 @@ export default function EventCard({ title, date, description, location, type, id
         className="w-full h-48 object-cover rounded-lg mb-4"
       />
 
-      <h2 className="text-xl font-bold text-gray-800 mb-2">{title}</h2>
-      <p className="text-sm text-gray-600 mb-1">{new Date(date).toLocaleDateString()}</p>
+      <h2 className="text-xl font-bold mb-2">{title}</h2>
+      <p className="text-sm text-gray-600 dark:text-gray-200 mb-1">{new Date(date).toLocaleDateString()}</p>
 
-      <p className="text-sm text-gray-700 mb-1">
+      <p className="text-sm text-gray-700 dark:text-gray-200 mb-1">
         <strong>Location:</strong> {location}
         <a
           href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="ml-2 text-blue-600 hover:text-blue-800 underline"
+          className="ml-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-600 underline"
         >
-        📍 
+          📍
         </a>
       </p>
 
-      <p className="text-sm text-gray-700 mb-1 capitalize">
+      <p className="text-sm text-gray-700 dark:text-gray-200 mb-1 capitalize">
         <strong>Type:</strong> {type}
       </p>
-      <p className="text-sm text-gray-700 mb-3">
+
+      <p className="text-sm text-gray-700 dark:text-gray-200 mb-3">
         <strong>Description:</strong> {description}
       </p>
 
@@ -52,12 +53,12 @@ export default function EventCard({ title, date, description, location, type, id
 
       <button
         onClick={handleSeeMore}
-        className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 transition"
+        className="mt-4 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white px-4 py-2 rounded-md transition"
       >
         See More
       </button>
-    
-
     </div>
   );
 }
+
+
