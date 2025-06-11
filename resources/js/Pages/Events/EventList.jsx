@@ -4,7 +4,8 @@ import { usePage, router } from '@inertiajs/react';
 import EventCard from '@/Components/EventCard';
 import Layout from '@/Layouts/Layout';
 import SearchInput from '@/Components/SearchInput';
-
+import Loading from '@/Components/Loading';
+import ScrollToTop from '@/Components/ScrollToTop';
 
 export default function EventList() {
   const { events, filters = {}, flash } = usePage().props;
@@ -12,14 +13,17 @@ export default function EventList() {
   const [search, setSearch] = useState(filters.search || '');
   const [type, setType] = useState(filters.type || '');
   const [date, setDate] = useState(filters.date || '');
+  const [loading, setLoading] = useState(false);
 
   const getMinDate = () => new Date().toISOString().split('T')[0];
 
   useEffect(() => {
+    setLoading(true);
     const timer = setTimeout(() => {
       router.get(route('events.index'), { search, type, date, page: 1 }, {
         preserveState: true,
         replace: true,
+        onFinish: () => setLoading(false),
       });
     }, 400);
 
@@ -27,18 +31,23 @@ export default function EventList() {
   }, [search, type, date]);
 
   const changePage = (page) => {
+    setLoading(true);
     router.get(route('events.index'), { search, type, date, page }, {
       preserveState: true,
       replace: true,
+      onFinish: () => setLoading(false),
     });
   };
 
   return (
     <Layout>
+      
       <h1 className="text-2xl font-bold mb-4">Event List</h1>
 
       {flash.success && <div className="alert">{flash.success}</div>}
 
+      {loading ? <Loading /> : ( <>
+      
       {/* Filters (delegated to SearchInput) */}
       <SearchInput
         search={search}
@@ -96,6 +105,11 @@ export default function EventList() {
           Next
         </button>
       </div>
+
+      </>)}
+
+      <ScrollToTop />
+
     </Layout>
   );
 }

@@ -20,7 +20,7 @@ Route::resource('events', EventController::class)
     ->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy'])
     ->names('events');
 
-Route::resource('events', EventController::class);
+// Route::resource('events', EventController::class);
 
 
 Route::get('/', function () {
@@ -47,8 +47,9 @@ Route::post('/contact', [ContactController::class, 'send'])->name('contact.send'
 Route::middleware(['auth'])->group(function () {
 
     //Add Event controller
-    Route::resource('events', EventController::class)
-        ->names('events');
+    // Route::resource('events', EventController::class)
+    //     ->names('events');
+
     Route::resource('events', EventController::class)->except(['index', 'show'])->names('events');
 
 
