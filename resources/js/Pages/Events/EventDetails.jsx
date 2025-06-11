@@ -9,7 +9,7 @@ export default function EventDetails({ event, auth }) {
 
   const { data, setData, put, processing, errors, reset } = useForm({
     title: event.title,
-    date: event.date,
+    date: event.date?.split(' ')[0],
     location: event.location,
     address: event.address,
     type: event.type,
