@@ -18,12 +18,12 @@ export default function EventList() {
   const getMinDate = () => new Date().toISOString().split('T')[0];
 
   useEffect(() => {
-    setLoading(true);
+    // setLoading(true);
     const timer = setTimeout(() => {
       router.get(route('events.index'), { search, type, date, page: 1 }, {
         preserveState: true,
         replace: true,
-        onFinish: () => setLoading(false),
+        // onFinish: () => setLoading(false),
       });
     }, 400);
 

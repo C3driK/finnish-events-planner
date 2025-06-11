@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, Head } from "@inertiajs/react";
 
+
 export default function Layout({ children }) {
     return (
         <div className="min-h-screen flex flex-col relative overflow-hidden">
@@ -94,11 +95,18 @@ export default function Layout({ children }) {
                             Calendar
                         </Link>
                         <Link
+                            href={route("events.my")}
+                            className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold px-6 py-2 rounded-lg hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-yellow-500/25"
+                        >
+                            My Event
+                        </Link>
+                        <Link
                             href={route('contact.form')}
                             className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold px-6 py-2 rounded-lg hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-yellow-500/25"
                         >
                             Contact
                         </Link>
+                        
                     </nav>
                 </div>
             </header>
