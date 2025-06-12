@@ -40,7 +40,7 @@ export default function Weather({ location }) {
   if (!location) return null;
 
   return (
-    <div className="mt-2 text-sm text-gray-700">
+    <div className="mt-2 text-sm text-white">
       <strong>Weather:</strong>{' '}
       {loading && <span>Loading...</span>}
       {error && <span className="text-red-500">Error: {error}</span>}

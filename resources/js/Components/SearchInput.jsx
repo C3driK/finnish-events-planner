@@ -35,22 +35,10 @@ export default function SearchInput({ search, setSearch, type, setType, date, se
           onChange={() => setShowFavorite(!showFavorite)}
           className="form-checkbox h-5 w-5 text-blue-600"
         />
-        <span className="ml-2 text-gray-700">Show Favorites Only</span>
+        <span className="ml-2 text-white-700">Show Favorites Only</span>
       </label>
 
-      {/* Type dropdown */}
-      {/* <select
-        name="type"
-        value={type}
-        onChange={(e) => setType(e.target.value)}
-        className="border p-2 rounded w-40"
-      >
-        <option value="">All Types</option>
-        <option value="music">Music</option>
-        <option value="art">Art</option>
-        <option value="culture">Culture</option>
-        <option value="general">General</option>
-      </select> */}
+
 
       {/* Filter buttons */}
       <div className="flex flex-wrap gap-2">
@@ -79,7 +67,7 @@ export default function SearchInput({ search, setSearch, type, setType, date, se
         value={date}
         min={minDate}
         onChange={(e) => setDate(e.target.value)}
-        className="border p-2 rounded w-fit"
+        className="dark text-black border p-2 rounded w-fit"
       />
     </div>
   );
