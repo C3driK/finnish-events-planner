@@ -87,12 +87,13 @@ export default function CalendarView() {
           </div>
         ))}
       </div>
-  
+
       {/* Calendar days grid */}
       <div className="grid grid-cols-7 gap-4">
         {calendarDays.map((day, idx) => (
           day ? (
             <div key={day.date} className="border p-2 rounded text-black bg-gray-50 min-h-[120px]">
+
               <div className="font-bold text-sm mb-2">{day.day}</div>
               {displayEvents(day.date)}
             </div>

@@ -2,6 +2,7 @@ import React from "react";
 import { Link, Head } from "@inertiajs/react";
 import DarkModeToggle from "../Components/DarkModeToggle";
 
+
 export default function Layout({ children }) {
     return (
 
@@ -103,6 +104,12 @@ export default function Layout({ children }) {
                 >
                     My Event
                 </Link>
+                        <Link
+                            href={route("events.my")}
+                            className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold px-6 py-2 rounded-lg hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-yellow-500/25"
+                        >
+                            My Event
+                        </Link>
                         <Link
                             href={route('contact.form')}
                             className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold px-6 py-2 rounded-lg hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-yellow-500/25"

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
@@ -143,6 +144,18 @@ class EventController extends Controller
         $events = Event::orderBy('date')->get();
 
         return Inertia::render('Events/CalendarView', [
+            'events' => $events,
+        ]);
+    }
+
+    public function myEvents()
+    {
+        /** @var \App\Models\User $user */
+        $user = Auth::user();
+
+        $events = $user->events()->latest()->get();
+
+        return Inertia::render('MyEvents', [
             'events' => $events,
         ]);
     }
