@@ -13,12 +13,20 @@ const eventTypeImages = {
   food: '/images/food event.jpg',
 };
 
-export default function EventCard({ title, date, description, location, type, id, canManage }) {
-  const [isFavorite, setIsFavorite] = useState(false);
+export default function EventCard({ title, date, description, location, type, id, is_favorite }) {
+  const [isFavorite, setIsFavorite] = useState(is_favorite);
 
   const handleSeeMore = () => {
     router.visit(route('events.show', id));
   };
+
+  const toggleFavorite = () => {
+    router.post(route('favorites.toggle', id), {}, {
+      preserveScroll: true,
+      onSuccess: () => setIsFavorite(!isFavorite),
+    });
+  
+}
 
   const imageUrl = eventTypeImages[type?.toLowerCase()] || eventTypeImages.default;
 
@@ -27,7 +35,7 @@ export default function EventCard({ title, date, description, location, type, id
       
       {/* Heart icon */}
       <div
-        onClick={() => setIsFavorite(!isFavorite)}
+        onClick={toggleFavorite}
         className="absolute top-4 left-4 cursor-pointer text-4xl select-none"
       >
         {isFavorite ? '❤️' : '🩶'}

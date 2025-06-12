@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\FavoriteController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
@@ -47,7 +48,10 @@ Route::resource('events', EventController::class)->only(['index', 'show'])->name
 Route::get('/contact', [ContactController::class, 'showForm'])->name('contact.form');
 Route::post('/contact', [ContactController::class, 'send'])->name('contact.send');
 
-
+//Add Favorite Event:
+Route::middleware(['auth'])->group(function () {
+    Route::post('/favorites/toggle/{event}', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
+});
 
 Route::middleware(['auth'])->group(function () {
 

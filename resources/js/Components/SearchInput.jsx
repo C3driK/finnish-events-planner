@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function SearchInput({ search, setSearch, type, setType, date, setDate, minDate }) {
+export default function SearchInput({ search, setSearch, type, setType, date, setDate, minDate, showFavorite, setShowFavorite }) {
   const eventsType = ['All', 'Music', 'Art', 'Culture', 'General', 'Kids', 'Sport', 'Food', 'Dance'];
 
   return (
@@ -26,6 +26,17 @@ export default function SearchInput({ search, setSearch, type, setType, date, se
           className="w-full border border-gray-300 rounded-md py-2 pl-10 pr-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
         />
       </div>
+
+      {/* Favorites Checkbox */}
+      <label className="inline-flex items-center mt-2">
+        <input
+          type="checkbox"
+          checked={showFavorite}
+          onChange={() => setShowFavorite(!showFavorite)}
+          className="form-checkbox h-5 w-5 text-blue-600"
+        />
+        <span className="ml-2 text-gray-700">Show Favorites Only</span>
+      </label>
 
       {/* Type dropdown */}
       {/* <select
