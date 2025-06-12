@@ -14,8 +14,8 @@ const eventTypeImages = {
 };
 
 const typeIcons = {
-  music: '🎵',
-  art: '🎨',
+  music: '🎶',
+  art: '🎨  ',
   general: '📅',
   dance: '💃',
   kids: '🧒',
@@ -46,7 +46,6 @@ export default function EventCard({ title, date, description, location, type, id
     <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md bg-white dark:bg-gray-800 rounded-2xl border border-gray-300 dark:border-gray-700 shadow-lg shadow-gray-400/20 dark:shadow-black/40 backdrop-blur-sm p-4 sm:p-6 m-2 sm:m-4 hover:shadow-xl transition duration-200 text-gray-900 dark:text-gray-100">
 
       
-      {/* Heart icon */}
       <div
         onClick={toggleFavorite}
         className="absolute top-4 left-4 cursor-pointer text-4xl select-none"

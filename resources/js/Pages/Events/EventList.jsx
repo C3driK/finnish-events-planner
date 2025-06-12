@@ -19,16 +19,15 @@ export default function EventList() {
   const getMinDate = () => new Date().toISOString().split('T')[0];
 
   useEffect(() => {
-     setLoading(true);
+     //setLoading(true);
     const timer = setTimeout(() => {
       router.get(route('events.index'), { search, type, date, showFavorite: !!showFavorite, page: 1 }, {
         preserveState: true,
         replace: true,
-         onFinish: () => setLoading(false),
+         //onFinish: () => setLoading(false),
       });
     }, 400);
-
-    return () => clearTimeout(timer);
+    return () => clearTimeout(timer);   
   }, [search, type, date, showFavorite]);
 
   const changePage = (page) => {
@@ -44,7 +43,6 @@ export default function EventList() {
     <Layout>
       
       <h1 className="event-list-title">Event List</h1>
-  
     
       {flash.success && (
       <div className="alert-success">
@@ -54,7 +52,6 @@ export default function EventList() {
   
       {loading ? <Loading /> : ( <>
       
-      {/* Filters (delegated to SearchInput) */}
       <SearchInput
         search={search}
         setSearch={setSearch}
@@ -67,7 +64,6 @@ export default function EventList() {
         setShowFavorite={setShowFavorite}
       />
   
-      {/* Event List */}
       {events.data.length === 0 ? (
          <p className="no-events">No events found.</p>
       ) : (
@@ -78,7 +74,7 @@ export default function EventList() {
         </div>
       )}
   
-      {/* Pagination */}
+     
       <div className="pagination">
         <button
           disabled={events.current_page === 1}

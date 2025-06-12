@@ -3,8 +3,8 @@ import Layout from '@/Layouts/Layout';
 import { useForm, router} from '@inertiajs/react';
 
 export default function EventDetails({ event, auth }) {
-  const [isEditing, setIsEditing] = useState(false);
 
+  const [isEditing, setIsEditing] = useState(false);
   const isOwner = auth?.user?.id === event.user_id;
 
   const { data, setData, put, processing, errors, reset } = useForm({
@@ -16,7 +16,6 @@ export default function EventDetails({ event, auth }) {
     description: event.description,
   });
   
-
   const handleCancel = () => {
     reset({
       title: event.title,
@@ -42,12 +41,10 @@ export default function EventDetails({ event, auth }) {
     }
   };
 
-
   const handleChange = (e) => {
     setData(e.target.name, e.target.value);
   };
 
-  // Get current datetime for min attribute
   const getMinDate = () => new Date().toISOString().split('T')[0];
 
   return (
@@ -62,7 +59,7 @@ export default function EventDetails({ event, auth }) {
                 name="title"
                 value={data.title}
                 onChange={handleChange}
-                className="w-full border border-gray-300 p-2 rounded"
+                className="w-full border border-gray-300 p-2 rounded text-black "
               />
               {errors.title && <p className="text-red-500 text-sm">{errors.title}</p>}
             </div>
@@ -75,7 +72,7 @@ export default function EventDetails({ event, auth }) {
                 value={data.date}
                 min={getMinDate()}
                 onChange={handleChange}
-                className="w-full border border-gray-300 p-2 rounded"
+                className="w-full border border-gray-300 p-2 rounded text-black "
               />
               {errors.date && <p className="text-red-500 text-sm">{errors.date}</p>}
             </div>
@@ -87,7 +84,7 @@ export default function EventDetails({ event, auth }) {
                 name="location"
                 value={data.location}
                 onChange={handleChange}
-                className="w-full border border-gray-300 p-2 rounded"
+                className="w-full border border-gray-300 p-2 rounded text-black "
               />
               {errors.location && <p className="text-red-500 text-sm">{errors.location}</p>}
             </div>
@@ -100,7 +97,7 @@ export default function EventDetails({ event, auth }) {
                 name="address"
                 value={data.address}
                 onChange={handleChange}
-                className="w-full border border-gray-300 p-2 rounded"
+                className="w-full border border-gray-300 p-2 rounded text-black "
               />
               {errors.address && <p className="text-red-500 text-sm">{errors.address}</p>}
             </div>
@@ -113,7 +110,7 @@ export default function EventDetails({ event, auth }) {
                 value={data.type}
                 onChange={handleChange}
                 required
-                className="w-full border border-gray-300 p-2 rounded"
+                className="w-full border border-gray-300 p-2 rounded text-black "
               >
                  <option value="" disabled>Select a Type</option>
                 <option value="music">Music</option>
@@ -134,7 +131,7 @@ export default function EventDetails({ event, auth }) {
                 name="description"
                 value={data.description}
                 onChange={handleChange}
-                className="w-full border border-gray-300 p-2 rounded"
+                className="w-full border border-gray-300 p-2 rounded text-black "
               />
               {errors.description && <p className="text-red-500 text-sm">{errors.description}</p>}
             </div>
@@ -162,14 +159,6 @@ export default function EventDetails({ event, auth }) {
             <p><strong>Date:</strong> {new Date(event.date).toLocaleString()}</p>
             <p>
               <strong>Location:</strong> {event.location}{' '}
-              {/* <a
-                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.location)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 underline ml-1"
-              >
-                📍
-              </a> */}
             </p>
             <p><strong>Type:</strong> {event.type}</p>
             <p><strong>Description:</strong></p>
@@ -206,7 +195,7 @@ export default function EventDetails({ event, auth }) {
 
               <button
                 onClick={()=>window.history.back()}
-                className="w-28 bg-gray-400 text-gray-800 px-4 py-2 rounded hover:bg-gray-500"
+                className="w-28 px-4 py-2 rounded hover:bg-blue-500  bg-blue-800 text-white "
               >
                 Back
               </button>

@@ -11,10 +11,6 @@ use Inertia\Inertia;
 
 class EventController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * 
-     */
 
     public function index(Request $request)
     {
@@ -24,7 +20,6 @@ class EventController extends Controller
         $type = $request->input('type');
         $date = $request->input('date');
         $query = Event::query();
-
 
         // Only show UPCOMING eventsMore actions
         $query->where('date', '>=', now());
@@ -43,7 +38,6 @@ class EventController extends Controller
             $query->where('date', $date);
         }
 
-        //Filter: Show only favorite events
         /** @var \App\Models\User $user */
         if ($request->boolean('showFavorite') && $user) {
             $query->whereHas('favorites', function ($q) use ($user) {
@@ -51,10 +45,8 @@ class EventController extends Controller
             });
         }
 
-
         $events = $query->orderBy('date', 'asc')->paginate(10)->withQueryString();
 
-        // Map over each event to add 'is_favorite'
         /** @var \App\Models\User $user */
         $events->getCollection()->transform(function ($event) use ($user) {
             $event->is_favorite = $user
@@ -62,7 +54,6 @@ class EventController extends Controller
                 : false;
             return $event;
         });
-
 
         return Inertia::render('Events/EventList', [
             'events' => $events,
@@ -75,19 +66,11 @@ class EventController extends Controller
         ]);
     }
 
-
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return Inertia::render('Events/AddEvent');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -106,12 +89,9 @@ class EventController extends Controller
         return Redirect::route('events.index')->with('success', 'Event created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(Event $event)
     {
-
         /** @var \App\Models\User $user */
 
         $user = Auth::user();
@@ -128,17 +108,12 @@ class EventController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit(Event $event)
     {
         return Inertia::render('Events/Edit', ['event' => $event]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, Event $event)
     {
         $request->validate([
@@ -158,9 +133,6 @@ class EventController extends Controller
         return Redirect::route('events.index')->with('success', 'Event updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Event $event)
     {
         $event->delete();

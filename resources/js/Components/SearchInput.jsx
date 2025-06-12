@@ -5,7 +5,7 @@ export default function SearchInput({ search, setSearch, type, setType, date, se
 
   return (
     <div className="flex flex-col gap-4 mb-6 max-w-3xl">
-      {/* Search box with icon */}
+      
       <div className="relative w-full max-w-md">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -23,11 +23,11 @@ export default function SearchInput({ search, setSearch, type, setType, date, se
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search by title or location"
-          className="w-full border border-gray-300 rounded-md py-2 pl-10 pr-3 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          className="w-full border border-gray-300 rounded-md py-2 pl-10 pr-3 text-sm text-black focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+
         />
       </div>
 
-      {/* Favorites Checkbox */}
       <label className="inline-flex items-center mt-2">
         <input
           type="checkbox"
@@ -38,9 +38,6 @@ export default function SearchInput({ search, setSearch, type, setType, date, se
         <span className="ml-2 text-white-700">Show Favorites Only</span>
       </label>
 
-
-
-      {/* Filter buttons */}
       <div className="flex flex-wrap gap-2">
         {eventsType.map((eventType) => {
           const value = eventType === 'All' ? '' : eventType;
@@ -60,7 +57,6 @@ export default function SearchInput({ search, setSearch, type, setType, date, se
         })}
       </div>
 
-      {/* Date picker */}
       <input
         type="date"
         name="date"

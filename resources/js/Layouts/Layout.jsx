@@ -1,18 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, Head } from "@inertiajs/react";
 import DarkModeToggle from "../Components/DarkModeToggle";
 
-
 export default function Layout({ children }) {
+    const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+
     return (
-
         <div className="min-h-screen flex flex-col relative overflow-hidden">
-
             <Head>
                 <title>SHOC Events</title>
                 <link rel="icon" type="image/x-icon" href="/favicon.png" />
             </Head>
-
 
             <style>{`
                 @keyframes logoGlow {
@@ -29,10 +27,6 @@ export default function Layout({ children }) {
                 .logo-animate {
                     animation: logoGlow 3s ease-in-out infinite;
                 }
-                .nav-link {
-                    position: relative;
-                    overflow: hidden;
-                }
                 .nav-link::before {
                     content: "";
                     position: absolute;
@@ -48,7 +42,6 @@ export default function Layout({ children }) {
                 }
             `}</style>
 
-            {/* Background */}
             <div
                 className="fixed inset-0 -z-10"
                 style={{
@@ -60,90 +53,76 @@ export default function Layout({ children }) {
                 }}
             />
 
-            {/* Header */}
-<header className="relative bg-black/40 backdrop-blur-lg text-white border-b border-white/10 shadow-2xl">
-    <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-        {/* Logo */}
-        <Link href="/" className="flex items-center">
-            <h1 className="text-2xl lg:text-3xl font-bold text-white tracking-wider logo-animate hover:text-yellow-400 transition-colors duration-300">
-                SHOC EVENTS
-            </h1>
-        </Link>
+            <header className="relative bg-black/40 backdrop-blur-lg text-white border-b border-white/10 shadow-2xl">
+                <div className="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+                    <Link href="/" className="flex items-center">
+                        <h1 className="text-2xl lg:text-3xl font-bold text-white tracking-wider logo-animate hover:text-yellow-400 transition-colors duration-300">
+                            SHOC EVENTS
+                        </h1>
+                    </Link>
 
-        {/* Right-side controls */}
-        <div className="flex items-center space-x-6">
-            {/* Navigation */}
-            <nav className="flex items-center space-x-6">
-                <Link
-                    href="/"
-                    className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold px-6 py-2 rounded-lg hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-yellow-500/25"
-                >
-                    Home
-                </Link>
-                <Link
-                    href="/events"
-                    className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold px-6 py-2 rounded-lg hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-yellow-500/25"
-                >
-                    Events
-                </Link>
-                <Link
-                    href={route("events.create")}
-                    className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold px-6 py-2 rounded-lg hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-yellow-500/25"
-                >
-                    Add Event
-                </Link>
-                <Link
-                    href={route("events.calendar")}
-                    className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold px-6 py-2 rounded-lg hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-yellow-500/25"
-                >
-                    Calendar
-                </Link>
+                    <div className="md:hidden">
+                        <button
+                            onClick={() => setMobileMenuOpen(!isMobileMenuOpen)}
+                            className="text-white focus:outline-none"
+                        >
+                            {isMobileMenuOpen ? "✖" : "☰"}
+                        </button>
+                    </div>
 
-                <Link
-                    href={route("events.my")}
-                    className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold px-6 py-2 rounded-lg hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-yellow-500/25"
-                >
-                    My Event
-                </Link>
-                <Link
-                    href={route('contact.form')}
-                    className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold px-6 py-2 rounded-lg hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-yellow-500/25"
-                >
-                    Contact
-                </Link>
-            </nav>
+                    <nav className="hidden md:flex items-center space-x-4 lg:space-x-6">
+                        {["/", "/events", route("events.create"), route("events.calendar"), route("events.my"), route("contact.form")].map((url, i) => (
+                            <Link
+                                key={url}
+                                href={url}
+                                className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold px-4 py-2 rounded-lg hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-yellow-500/25"
+                            >
+                                {["Home", "Events", "Add Event", "Calendar", "My Event", "Contact"][i]}
+                            </Link>
+                        ))}
+                    </nav>
 
-            {/* Dark Mode Toggle */}
-            <div className="flex justify-end">
-                <DarkModeToggle />
-            </div>
-        </div>
-    </div>
-</header>
+                    <div className="hidden md:flex justify-end">
+                        <DarkModeToggle />
+                    </div>
+                </div>
 
+                {isMobileMenuOpen && (
+                    <div className="md:hidden px-4 pb-4 space-y-2 bg-black/60">
+                        {["/", "/events", route("events.create"), route("events.calendar"), route("events.my"), route("contact.form")].map((url, i) => (
+                        <Link
+                            key={url}
+                            href={url}
+                            className="block w-full md:w-auto text-center bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold px-4 py-2 rounded-lg transition-transform duration-300 hover:scale-105 shadow-lg hover:shadow-yellow-500/25"
+                        >
+                        {["Home", "Events", "Add Event", "Calendar", "My Event", "Contact"][i]}
+                        </Link>
+                        ))}
 
-            {/* Main Content */}
+                        <div className="flex justify-center mt-2">
+                            <DarkModeToggle />
+                        </div>
+                    </div>
+                )}
+            </header>
+
             <main className="flex-grow relative">
-                <div className="container mx-auto px-6 py-8">
-                <div className="bg-slate-500/95 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/50 min-h-[80vh] p-8 dark:border-white/10 dark:bg-white/5">
-
+                <div className="container mx-auto px-4 sm:px-6 py-8">
+                    <div className="bg-slate-500/95 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/50 min-h-[80vh] p-6 sm:p-8 dark:border-white/10 dark:bg-white/5">
                         {children}
                     </div>
                 </div>
             </main>
 
-            {/* Footer */}
             <footer className="relative bg-black/40 backdrop-blur-lg text-white/90 border-t border-white/10 shadow-2xl">
-                <div className="container mx-auto px-6 py-6">
-                    <div className="flex flex-col items-center space-y-4 text-center">
-                        <div>
-                            <p className="font-medium">
-                                © {new Date().getFullYear()} SHOC Events. All rights reserved.
-                            </p>
-                            <p className="text-sm text-white/70 mt-1">
-                                Creating unforgettable experiences
-                            </p>
-                        </div>
+                <div className="container mx-auto px-4 sm:px-6 py-6">
+                    <div className="flex flex-col items-center text-center">
+                        <p className="font-medium">
+                            © {new Date().getFullYear()} SHOC Events. All rights reserved.
+                        </p>
+                        <p className="text-sm text-white/70 mt-1">
+                            Creating unforgettable experiences
+                        </p>
                     </div>
                 </div>
             </footer>

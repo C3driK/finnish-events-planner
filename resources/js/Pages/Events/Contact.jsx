@@ -27,7 +27,7 @@ export default function Contact() {
 
   return (
     <Layout >
-   <form onSubmit={handleSubmit} className="max-w-md mx-auto p-4 bg-white dark:bg-gray-600 text-gray-900 dark:text-gray-100 rounded shadow">
+   <form onSubmit={handleSubmit} className="max-w-md mx-auto p-6 bg-white dark:bg-gray-600 text-gray-900 dark:text-gray-100 rounded shadow">
 
       <h2 className="text-2xl font-semibold mb-4">Contact Us</h2>
 

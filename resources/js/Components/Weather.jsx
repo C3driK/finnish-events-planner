@@ -40,16 +40,16 @@ export default function Weather({ location }) {
   if (!location) return null;
 
   return (
-    <div className="mt-2 text-sm text-white">
-      <strong>Weather:</strong>{' '}
-      {loading && <span>Loading...</span>}
-      {error && <span className="text-red-500">Error: {error}</span>}
-      {weather && (
-        <span className="flex items-center gap-2">
-          <img src={weather.icon} alt={weather.description} className="w-5 h-5" />
-          {weather.temperature}°C, {weather.description}
-        </span>
-      )}
-    </div>
+    <div className="mt-2 text-sm text-gray-800 dark:text-white">
+  <strong>Weather:</strong>{' '}
+  {loading && <span>Loading...</span>}
+  {error && <span className="text-red-500">Error: {error}</span>}
+  {weather && (
+    <span className="flex items-center gap-2">
+      <img src={weather.icon} alt={weather.description} className="w-5 h-5" />
+      {weather.temperature}°C, {weather.description}
+    </span>
+  )}
+</div>
   );
 }

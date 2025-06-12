@@ -9,9 +9,6 @@ use Illuminate\Support\Facades\Auth;
 
 class FavoriteController extends Controller
 {
-    /**
-     * Store a favorite event for the authenticated user.
-     */
     public function toggle(Event $event)
     {
 
@@ -20,9 +17,6 @@ class FavoriteController extends Controller
         return back()->with('success', 'Favorite toggled!');
     }
 
-    /**
-     * Remove a favorite event for the authenticated user.
-     */
     public function destroy(Event $event)
     {
 
