@@ -1,20 +1,19 @@
 import React from 'react';
 import '../../../css/addevent.css';
 import { useForm } from '@inertiajs/react';
-import Layout from '@/Layouts/Layout'; // Layout for header/nav/footer
+import Layout from '@/Layouts/Layout';
 
 export default function AddEvent() {
-
   const { data, setData, post, processing, errors } = useForm({
     title: '',
     date: '',
     location: '',
     description: '',
-    type:'',
-    address:'',
+    type: '',
+    address: '',
   });
 
-   const getMinDate = () => new Date().toISOString().split('T')[0];
+  const getMinDate = () => new Date().toISOString().split('T')[0];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,7 +27,7 @@ export default function AddEvent() {
 
   return (
     <Layout>
-   <h1 className="text-2xl font-semibold mb-4 text-white/90">Add New Event</h1>
+      <h1 className="text-2xl font-semibold mb-4 text-white/90 text-center">Add New Event</h1>
 
       <form onSubmit={handleSubmit} className="event-form">
         <div>
@@ -40,6 +39,7 @@ export default function AddEvent() {
             value={data.title}
             onChange={handleChange}
             required
+            className="text-black rounded-md"
           />
           {errors.title && <div className="error">{errors.title}</div>}
         </div>
@@ -54,7 +54,7 @@ export default function AddEvent() {
             min={getMinDate()}
             onChange={handleChange}
             required
-            
+            className="text-black rounded-md"
           />
           {errors.date && <div className="error">{errors.date}</div>}
         </div>
@@ -68,6 +68,7 @@ export default function AddEvent() {
             value={data.location}
             onChange={handleChange}
             required
+            className="text-black rounded-md"
           />
           {errors.location && <div className="error">{errors.location}</div>}
         </div>
@@ -81,6 +82,7 @@ export default function AddEvent() {
             value={data.address}
             onChange={handleChange}
             required
+            className="text-black rounded-md"
           />
           {errors.location && <div className="error">{errors.location}</div>}
         </div>
@@ -93,18 +95,19 @@ export default function AddEvent() {
             value={data.type}
             onChange={handleChange}
             required
+            className="text-black rounded-md w-full"
           >
-          <option value="" disabled>Select a Type</option>
-          <option value="music">Music</option>
-          <option value="art">Art</option>
-          <option value="culture">Culture</option>
-          <option value="kids">Kids</option>
-          <option value="sport">Sport</option>
-          <option value="food">Food</option>
-          <option value="dance">Dance</option>
-          <option value="general">General</option>
+            <option value="" disabled>Select a Type</option>
+            <option value="music">Music</option>
+            <option value="art">Art</option>
+            <option value="culture">Culture</option>
+            <option value="kids">Kids</option>
+            <option value="sport">Sport</option>
+            <option value="food">Food</option>
+            <option value="dance">Dance</option>
+            <option value="general">General</option>
           </select>
-        {errors.type && <div className="error">{errors.type}</div>}
+          {errors.type && <div className="error">{errors.type}</div>}
         </div>
 
         <div>
@@ -114,6 +117,7 @@ export default function AddEvent() {
             name="description"
             value={data.description}
             onChange={handleChange}
+            className="text-black rounded-md"
           />
           {errors.description && <div className="error">{errors.description}</div>}
         </div>

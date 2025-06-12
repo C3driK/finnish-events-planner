@@ -6,13 +6,11 @@ export default function CalendarView() {
   const { events } = usePage().props;
   const [eventsByDate, setEventsByDate] = useState({});
 
-  // Group events by their date (YYYY-MM-DD)
   useEffect(() => {
     if (!events || events.length === 0) return;
 
     const grouped = {};
     events.forEach(event => {
-      // Extract only the date part (ignore time)
       const dateOnly = event.date.split(' ')[0];
       if (!grouped[dateOnly]) grouped[dateOnly] = [];
       grouped[dateOnly].push(event);
@@ -21,7 +19,6 @@ export default function CalendarView() {
     setEventsByDate(grouped);
   }, [events]);
 
-  // Format a Date object as 'YYYY-MM-DD'
   const formatDate = (date) => {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -29,23 +26,18 @@ export default function CalendarView() {
     return `${year}-${month}-${day}`;
   };
 
-  // Generate calendar cells for current month, including padding days for alignment
   const generateCalendar = () => {
     const today = new Date();
     const year = today.getFullYear();
     const month = today.getMonth();
-
     const firstDayIndex = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
-
     const days = [];
 
-    // Padding empty days before first day of month
     for (let i = 0; i < firstDayIndex; i++) {
       days.push(null);
     }
 
-    // Actual days with date info
     for (let i = 1; i <= daysInMonth; i++) {
       const date = new Date(year, month, i);
       days.push({ date: formatDate(date), day: i });
@@ -54,7 +46,6 @@ export default function CalendarView() {
     return days;
   };
 
-  // Render events for a given date
   const displayEvents = (date) => {
     if (!eventsByDate[date]) return null;
     return eventsByDate[date].map(event => (
@@ -75,7 +66,6 @@ export default function CalendarView() {
         Event Calendar - {new Date().toLocaleString('default', { month: 'long', year: 'numeric' })}
       </h1>
   
-      {/* Weekdays header */}
       <div className="grid grid-cols-7 gap-x-2 gap-y-6 sm:gap-x-4 sm:gap-y-8" style={{ marginBottom: '1.5rem' }}>
   {weekdays.map(day => (
     <div
@@ -88,11 +78,6 @@ export default function CalendarView() {
   ))}
 </div>
 
-
-
-
-
-      {/* Calendar days grid */}
       <div className="grid grid-cols-7 gap-4">
         {calendarDays.map((day, idx) => (
           day ? (
@@ -108,8 +93,14 @@ export default function CalendarView() {
       </div>
   
       <button
-        onClick={() => window.history.back()}
-        className="w-28 bg-blue-800 text-white-800 px-4 py-2 rounded hover:bg-gray-500 "style={{ marginTop: '1.5rem' }}
+          onClick={() => window.history.back()}
+          className="w-28 
+             bg-gray-200 text-black 
+             dark:bg-blue-800 dark:text-white 
+             px-4 py-2 rounded 
+             hover:bg-gray-300 dark:hover:bg-blue-700 
+             transition duration-300"
+          style={{ marginTop: '1.5rem' }}
       >
         Back
       </button>

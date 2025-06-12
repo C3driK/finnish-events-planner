@@ -9,8 +9,6 @@ use App\Http\Controllers\ContactController;
 use Inertia\Inertia;
 use App\Models\Event;
 
-
-
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
 Route::get('/events/create', [EventController::class, 'create'])->name('events.create');
 Route::post('/events', [EventController::class, 'store'])->name('events.store');
@@ -21,13 +19,10 @@ Route::resource('events', EventController::class)
     ->only(['index', 'create', 'store', 'show', 'edit', 'update', 'destroy'])
     ->names('events');
 
-// Route::resource('events', EventController::class);
-
 //Add MyEvents
 Route::get('/my-events', [EventController::class, 'myEvents'])
     ->middleware(['auth', 'verified'])
     ->name('events.my');
-
 
 Route::get('/', function () {
     $events = Event::orderBy('date', 'asc')->take(10)->get();
@@ -55,19 +50,12 @@ Route::middleware(['auth'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
 
-    //Add Event controller
-    // Route::resource('events', EventController::class)
-    //     ->names('events');
-
     Route::resource('events', EventController::class)->except(['index', 'show'])->names('events');
-
 
     //Profile Management
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-
 
 require __DIR__ . '/auth.php';
