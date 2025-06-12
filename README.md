@@ -5,6 +5,10 @@
     Users can add, view, edit, and delete events, and see the weather forecast for the event location.
 
 ## Setup instructions
+#### Run the follow commands to setup
+- php artisan migrate #To setup database
+- php artisan serve
+- npm run dev (copy url to browser, enjoy)
 
 ## Team members and their roles
 #### Olufemi Adeniyi - Backend Developer
@@ -13,4 +17,10 @@
 #### Habiba Urmi - Frontend Developer
 
 ## What you learned / what you'd improve
+-   React
+-   Inertia JS
+-   Laravel
+-   Tailwind CSS
+
+Kindly suggest improvements, thanks.
 
