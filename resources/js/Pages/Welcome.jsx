@@ -147,7 +147,9 @@ export default function Welcome({ auth, events }) {
                             <h3 className="text-3xl font-bold mb-6">Upcoming Events</h3>
                             {events && events.length > 0 ? (
                                 <ul className="space-y-4">
-                                    {events.map((event) => (
+                                    {events
+                                        .filter(event => new Date(event.date) >= new Date())
+                                        .map(event => (
                                         <li
                                             key={event.id}
                                             className="p-4 bg-white/10 rounded-lg backdrop-blur-md shadow-md"

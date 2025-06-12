@@ -13,26 +13,27 @@ export default function EventList() {
   const [search, setSearch] = useState(filters.search || '');
   const [type, setType] = useState(filters.type || '');
   const [date, setDate] = useState(filters.date || '');
+  const [showFavorite, setShowFavorite] = useState(!!filters.showFavorite);
   const [loading, setLoading] = useState(false);
 
   const getMinDate = () => new Date().toISOString().split('T')[0];
 
   useEffect(() => {
-    // setLoading(true);
+     setLoading(true);
     const timer = setTimeout(() => {
-      router.get(route('events.index'), { search, type, date, page: 1 }, {
+      router.get(route('events.index'), { search, type, date, showFavorite: !!showFavorite, page: 1 }, {
         preserveState: true,
         replace: true,
-        // onFinish: () => setLoading(false),
+         onFinish: () => setLoading(false),
       });
     }, 400);
 
     return () => clearTimeout(timer);
-  }, [search, type, date]);
+  }, [search, type, date, showFavorite]);
 
   const changePage = (page) => {
     setLoading(true);
-    router.get(route('events.index'), { search, type, date, page }, {
+    router.get(route('events.index'), { search, type, date, showFavorite, page }, {
       preserveState: true,
       replace: true,
       onFinish: () => setLoading(false),
@@ -62,6 +63,8 @@ export default function EventList() {
         date={date}
         setDate={setDate}
         minDate={getMinDate()}
+        showFavorite={showFavorite}
+        setShowFavorite={setShowFavorite}
       />
   
       {/* Event List */}
