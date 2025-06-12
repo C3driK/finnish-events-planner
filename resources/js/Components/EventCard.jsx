@@ -2,19 +2,27 @@ import React, { useState } from 'react';
 import { router } from '@inertiajs/react';
 import Weather from '@/Components/Weather';
 
-export default function EventCard({ title, date, description, location, type, id, canManage }) {
-  const [isFavorite, setIsFavorite] = useState(false);
+export default function EventCard({ title, date, description, location, type, id, is_favorite }) {
+  const [isFavorite, setIsFavorite] = useState(is_favorite);
 
   const handleSeeMore = () => {
     router.visit(route('events.show', id));
   };
+
+  const toggleFavorite = () => {
+    router.post(route('favorites.toggle', id), {}, {
+      preserveScroll: true,
+      onSuccess: () => setIsFavorite(!isFavorite),
+    });
+  
+}
 
   return (
     <div className="relative max-w-md bg-white rounded-2xl shadow-md p-6 m-4 hover:shadow-lg transition duration-200">
       
       {/* Heart icon */}
       <div
-        onClick={() => setIsFavorite(!isFavorite)}
+        onClick={toggleFavorite}
         className="absolute top-4 left-4 cursor-pointer text-4xl"
       >
         {isFavorite ? '❤️' : '🩶'}
