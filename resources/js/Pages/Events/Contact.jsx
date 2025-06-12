@@ -27,11 +27,13 @@ export default function Contact() {
 
   return (
     <Layout >
-    <form onSubmit={handleSubmit} className="max-w-md mx-auto p-4 bg-white rounded shadow">
+   <form onSubmit={handleSubmit} className="max-w-md mx-auto p-4 bg-white dark:bg-gray-600 text-gray-900 dark:text-gray-100 rounded shadow">
+
       <h2 className="text-2xl font-semibold mb-4">Contact Us</h2>
 
       <div className="mb-4">
-        <label htmlFor="name" className="block mb-1 font-medium">
+      <label htmlFor="name" className="block mb-1 font-medium text-gray-700 dark:text-gray-200">
+
           Name
         </label>
         <input
@@ -40,15 +42,17 @@ export default function Contact() {
           name="name"
           value={form.name}
           onChange={handleChange}
-          className={`w-full px-3 py-2 border rounded ${
-            errors.name ? 'border-red-500' : 'border-gray-300'
+          className={`w-full px-3 py-2 border rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-300 ${
+            errors.name ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
           }`}
         />
+
         {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
       </div>
 
       <div className="mb-4">
-        <label htmlFor="email" className="block mb-1 font-medium">
+      <label htmlFor="email" className="block mb-1 font-medium text-gray-700 dark:text-gray-200">
+
           Email
         </label>
         <input
@@ -57,15 +61,17 @@ export default function Contact() {
           name="email"
           value={form.email}
           onChange={handleChange}
-          className={`w-full px-3 py-2 border rounded ${
-            errors.email ? 'border-red-500' : 'border-gray-300'
+          className={`w-full px-3 py-2 border rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-300 ${
+            errors.name ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
           }`}
+          
         />
         {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
       </div>
 
       <div className="mb-4">
-        <label htmlFor="message" className="block mb-1 font-medium">
+      <label htmlFor="message" className="block mb-1 font-medium text-gray-700 dark:text-gray-200">
+
           Message
         </label>
         <textarea
@@ -74,9 +80,10 @@ export default function Contact() {
           value={form.message}
           onChange={handleChange}
           rows="5"
-          className={`w-full px-3 py-2 border rounded ${
-            errors.message ? 'border-red-500' : 'border-gray-300'
+          className={`w-full px-3 py-2 border rounded bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-300 ${
+            errors.name ? 'border-red-500' : 'border-gray-300 dark:border-gray-600'
           }`}
+          
         ></textarea>
         {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message}</p>}
       </div>

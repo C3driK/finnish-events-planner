@@ -13,6 +13,18 @@ const eventTypeImages = {
   food: '/images/food event.jpg',
 };
 
+const typeIcons = {
+  music: '🎵',
+  art: '🎨',
+  general: '📅',
+  dance: '💃',
+  kids: '🧒',
+  sport: '⚽',
+  culture: '🌍',
+  food: '🍽️',
+};
+
+
 export default function EventCard({ title, date, description, location, type, id, is_favorite }) {
   const [isFavorite, setIsFavorite] = useState(is_favorite);
 
@@ -31,7 +43,8 @@ export default function EventCard({ title, date, description, location, type, id
   const imageUrl = eventTypeImages[type?.toLowerCase()] || eventTypeImages.default;
 
   return (
-    <div className="relative max-w-md bg-white dark:bg-gray-800 rounded-2xl border border-gray-300 dark:border-gray-700 shadow-lg shadow-gray-400/20 dark:shadow-black/40 backdrop-blur-sm p-6 m-4 hover:shadow-xl transition duration-200 text-gray-900 dark:text-gray-100">
+    <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md bg-white dark:bg-gray-800 rounded-2xl border border-gray-300 dark:border-gray-700 shadow-lg shadow-gray-400/20 dark:shadow-black/40 backdrop-blur-sm p-4 sm:p-6 m-2 sm:m-4 hover:shadow-xl transition duration-200 text-gray-900 dark:text-gray-100">
+
       
       {/* Heart icon */}
       <div
@@ -42,10 +55,11 @@ export default function EventCard({ title, date, description, location, type, id
       </div>
 
       <img
-        src={imageUrl}
-        alt={title}
-        className="w-full h-48 object-cover rounded-lg mb-4"
-      />
+      src={imageUrl}
+      alt={title}
+      className="w-full h-40 sm:h-48 object-cover rounded-lg mb-4"
+    />
+
 
       <h2 className="text-xl font-bold mb-2">{title}</h2>
       <p className="text-sm text-gray-600 dark:text-gray-200 mb-1">{new Date(date).toLocaleDateString()}</p>
@@ -62,9 +76,13 @@ export default function EventCard({ title, date, description, location, type, id
         </a>
       </p>
 
-      <p className="text-sm text-gray-700 dark:text-gray-200 mb-1 capitalize">
-        <strong>Type:</strong> {type}
-      </p>
+      <p className="text-sm text-gray-700 dark:text-gray-200 mb-1 capitalize flex items-center gap-1">
+  <strong>Type:</strong>
+  <span>
+  {type} {typeIcons[type?.toLowerCase()] || '❓'}
+  </span>
+</p>
+
 
       <p className="text-sm text-gray-700 dark:text-gray-200 mb-3">
         <strong>Description:</strong> {description}

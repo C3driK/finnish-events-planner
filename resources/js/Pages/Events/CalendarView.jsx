@@ -76,17 +76,21 @@ export default function CalendarView() {
       </h1>
   
       {/* Weekdays header */}
-      <div className="grid grid-cols-7 gap-4">
-        {weekdays.map(day => (
-          <div
-            key={day}
-            className="border p-2 rounded text-black bg-gray-50 min-h-[120px]"
-            style={{ userSelect: 'none' }}
-          >
-            {day}
-          </div>
-        ))}
-      </div>
+      <div className="grid grid-cols-7 gap-x-2 gap-y-6 sm:gap-x-4 sm:gap-y-8" style={{ marginBottom: '1.5rem' }}>
+  {weekdays.map(day => (
+    <div
+      key={day}
+      className="bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100 border border-blue-300 dark:border-blue-700 p-2 rounded-lg text-center font-semibold text-lg min-h-[60px] uppercase"
+      style={{ userSelect: 'none' }}
+    >
+      {day}
+    </div>
+  ))}
+</div>
+
+
+
+
 
       {/* Calendar days grid */}
       <div className="grid grid-cols-7 gap-4">
@@ -105,7 +109,7 @@ export default function CalendarView() {
   
       <button
         onClick={() => window.history.back()}
-        className="w-28 bg-gray-400 text-gray-800 px-4 py-2 rounded hover:bg-gray-500"
+        className="w-28 bg-blue-800 text-white-800 px-4 py-2 rounded hover:bg-gray-500 "style={{ marginTop: '1.5rem' }}
       >
         Back
       </button>
