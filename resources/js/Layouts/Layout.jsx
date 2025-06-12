@@ -1,9 +1,11 @@
 import React from "react";
 import { Link, Head } from "@inertiajs/react";
+import DarkModeToggle from "../Components/DarkModeToggle";
 
 
 export default function Layout({ children }) {
     return (
+
         <div className="min-h-screen flex flex-col relative overflow-hidden">
 
             <Head>
@@ -59,41 +61,49 @@ export default function Layout({ children }) {
             />
 
             {/* Header */}
-            <header className="relative bg-black/40 backdrop-blur-lg text-white border-b border-white/10 shadow-2xl">
-                <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-                    {/* Logo */}
-                    <Link href="/" className="flex items-center">
-                        <h1 className="text-2xl lg:text-3xl font-bold text-white tracking-wider logo-animate hover:text-yellow-400 transition-colors duration-300">
-                            SHOC EVENTS
-                        </h1>
-                    </Link>
+<header className="relative bg-black/40 backdrop-blur-lg text-white border-b border-white/10 shadow-2xl">
+    <div className="container mx-auto px-6 py-4 flex justify-between items-center">
+        {/* Logo */}
+        <Link href="/" className="flex items-center">
+            <h1 className="text-2xl lg:text-3xl font-bold text-white tracking-wider logo-animate hover:text-yellow-400 transition-colors duration-300">
+                SHOC EVENTS
+            </h1>
+        </Link>
 
-                    {/* Navigation */}
-                    <nav className="flex items-center space-x-6">
-                        <Link
-                            href="/"
-                            className="nav-link px-4 py-2 text-white/90 hover:text-white font-medium transition-all duration-300 hover:bg-white/10 rounded-lg backdrop-blur-sm"
-                        >
-                            Home
-                        </Link>
-                        <Link
-                            href="/events"
-                            className="nav-link px-4 py-2 text-white/90 hover:text-white font-medium transition-all duration-300 hover:bg-white/10 rounded-lg backdrop-blur-sm"
-                        >
-                            Events
-                        </Link>
-                        <Link
-                            href={route("events.create")}
-                            className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold px-6 py-2 rounded-lg hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-yellow-500/25"
-                        >
-                            Add Event
-                        </Link>
-                        <Link
-                            href={route("events.calendar")}
-                            className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold px-6 py-2 rounded-lg hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-yellow-500/25"
-                        >
-                            Calendar
-                        </Link>
+        {/* Right-side controls */}
+        <div className="flex items-center space-x-6">
+            {/* Navigation */}
+            <nav className="flex items-center space-x-6">
+                <Link
+                    href="/"
+                    className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold px-6 py-2 rounded-lg hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-yellow-500/25"
+                >
+                    Home
+                </Link>
+                <Link
+                    href="/events"
+                    className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold px-6 py-2 rounded-lg hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-yellow-500/25"
+                >
+                    Events
+                </Link>
+                <Link
+                    href={route("events.create")}
+                    className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold px-6 py-2 rounded-lg hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-yellow-500/25"
+                >
+                    Add Event
+                </Link>
+                <Link
+                    href={route("events.calendar")}
+                    className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold px-6 py-2 rounded-lg hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-yellow-500/25"
+                >
+                    Calendar
+                </Link>
+                <Link
+                    //href={route("events.my")}
+                    className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold px-6 py-2 rounded-lg hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-yellow-500/25"
+                >
+                    My Event
+                </Link>
                         <Link
                             href={route("events.my")}
                             className="bg-gradient-to-r from-yellow-400 to-orange-500 text-black font-bold px-6 py-2 rounded-lg hover:scale-105 transition-transform duration-300 shadow-lg hover:shadow-yellow-500/25"
@@ -106,15 +116,22 @@ export default function Layout({ children }) {
                         >
                             Contact
                         </Link>
-                        
-                    </nav>
-                </div>
-            </header>
+            </nav>
+
+            {/* Dark Mode Toggle */}
+            <div className="flex justify-end">
+                <DarkModeToggle />
+            </div>
+        </div>
+    </div>
+</header>
+
 
             {/* Main Content */}
             <main className="flex-grow relative">
                 <div className="container mx-auto px-6 py-8">
-                    <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/20 min-h-[70vh] p-8">
+                <div className="bg-slate-500/95 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/50 min-h-[80vh] p-8 dark:border-white/10 dark:bg-white/5">
+
                         {children}
                     </div>
                 </div>

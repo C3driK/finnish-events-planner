@@ -59,9 +59,10 @@ export default function CalendarView() {
     if (!eventsByDate[date]) return null;
     return eventsByDate[date].map(event => (
       <div key={event.id} className="p-2 bg-white border rounded shadow-sm mb-1">
-        <strong>{event.title}</strong><br />
-        <small className="text-gray-600">{event.location}</small>
-      </div>
+      <strong>{event.title}</strong><br />
+      <span className="text-sm text-gray-600">{event.location}</span>
+    </div>
+    
     ));
   };
 
@@ -70,16 +71,16 @@ export default function CalendarView() {
 
   return (
     <Layout>
-      <h1 className="text-2xl font-bold mb-4">
+      <h1 className="text-2xl font-bold mb-4 text-white/90">
         Event Calendar - {new Date().toLocaleString('default', { month: 'long', year: 'numeric' })}
       </h1>
-
+  
       {/* Weekdays header */}
-      <div className="grid grid-cols-7 gap-4 mb-2 border-b border-gray-300">
+      <div className="grid grid-cols-7 gap-4">
         {weekdays.map(day => (
           <div
             key={day}
-            className="text-center font-semibold text-gray-700 uppercase py-2 bg-gray-100 select-none"
+            className="border p-2 rounded text-black bg-gray-50 min-h-[120px]"
             style={{ userSelect: 'none' }}
           >
             {day}
@@ -91,22 +92,24 @@ export default function CalendarView() {
       <div className="grid grid-cols-7 gap-4">
         {calendarDays.map((day, idx) => (
           day ? (
-            <div key={day.date} className="border p-2 rounded bg-gray-50 min-h-[120px]">
+            <div key={day.date} className="border p-2 rounded text-black bg-gray-50 min-h-[120px]">
+
               <div className="font-bold text-sm mb-2">{day.day}</div>
               {displayEvents(day.date)}
             </div>
           ) : (
-            <div key={`empty-${idx}`} className="border p-2 rounded bg-gray-100 min-h-[120px]" />
+            <div key={`empty-${idx}`} className="border p-2 rounded text-black bg-gray-50 min-h-[120px]" />
           )
         ))}
       </div>
-
+  
       <button
         onClick={() => window.history.back()}
-        className="w-28 bg-gray-400 text-gray-800 px-4 py-2 rounded hover:bg-gray-500 mt-4"
+        className="w-28 bg-gray-400 text-gray-800 px-4 py-2 rounded hover:bg-gray-500"
       >
         Back
       </button>
     </Layout>
   );
 }
+

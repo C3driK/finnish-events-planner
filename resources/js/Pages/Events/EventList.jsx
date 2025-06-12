@@ -42,10 +42,15 @@ export default function EventList() {
   return (
     <Layout>
       
-      <h1 className="text-2xl font-bold mb-4">Event List</h1>
-
-      {flash.success && <div className="alert">{flash.success}</div>}
-
+      <h1 className="event-list-title">Event List</h1>
+  
+    
+      {flash.success && (
+      <div className="alert-success">
+        {flash.success}
+      </div>
+    )}
+  
       {loading ? <Loading /> : ( <>
       
       {/* Filters (delegated to SearchInput) */}
@@ -58,35 +63,35 @@ export default function EventList() {
         setDate={setDate}
         minDate={getMinDate()}
       />
-
+  
       {/* Event List */}
       {events.data.length === 0 ? (
-        <p>No events found.</p>
+         <p className="no-events">No events found.</p>
       ) : (
-        <div className="event-list-container">
+        <div className="event-cards-container">
           {events.data.map((event) => (
             <EventCard key={event.id} {...event} />
           ))}
         </div>
       )}
-
+  
       {/* Pagination */}
-      <div className="pagination flex gap-2 mt-6">
+      <div className="pagination">
         <button
           disabled={events.current_page === 1}
           onClick={() => changePage(events.current_page - 1)}
-          className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+          className="page-btn"
         >
           Previous
         </button>
-
+  
         {Array.from({ length: events.last_page }, (_, i) => {
           const pageNum = i + 1;
           return (
             <button
               key={pageNum}
               onClick={() => changePage(pageNum)}
-              className={`px-3 py-1 rounded ${
+              className={`px-3 py-1 rounded${
                 events.current_page === pageNum
                   ? 'bg-blue-600 text-white'
                   : 'bg-gray-200'
@@ -96,20 +101,20 @@ export default function EventList() {
             </button>
           );
         })}
-
+  
         <button
           disabled={events.current_page === events.last_page}
           onClick={() => changePage(events.current_page + 1)}
-          className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50"
+          className="page-btn"
         >
           Next
         </button>
       </div>
-
+  
       </>)}
-
+  
       <ScrollToTop />
-
+  
     </Layout>
   );
 }
